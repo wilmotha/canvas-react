@@ -8,11 +8,12 @@ function App() {
   const token = useSelector(getToken);
   const [ testData, setTestData ] = useState("");
 
-  useEffect(() => {
-    if (token !== "" && testData === "") {
-      fetchData(token, setTestData, "users/self");
-    } 
-  }, [ token, testData ])
+  // this causes cors issue
+  // useEffect(() => {
+  //   if (token !== "" && testData === "") {
+  //     fetchData(token, setTestData, "users/self");
+  //   } 
+  // }, [ token, testData ])
 
   return (
     <div>
