@@ -9,11 +9,11 @@ function App() {
   const [ testData, setTestData ] = useState("");
 
   // this causes cors issue
-  // useEffect(() => {
-  //   if (token !== "" && testData === "") {
-  //     fetchData(token, setTestData, "users/self");
-  //   } 
-  // }, [ token, testData ])
+  useEffect(() => {
+    if (token !== "" && testData === "") {
+      fetchData(setTestData, "users/self");
+    }
+  }, [ token, testData ])
 
   return (
     <div>
@@ -28,6 +28,8 @@ function App() {
         </div> : 
         <div>
           <h1> You are logged in! </h1>
+          <button onClick={() => (fetchData(setTestData, "users/self"))}>cLiCk mE!</button>
+          {console.log("YEET: ", testData)}
         </div>}
     </div>
   );
