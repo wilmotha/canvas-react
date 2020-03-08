@@ -3,15 +3,16 @@ import Login from './components/tempLogin';
 import { useSelector } from 'react-redux';
 import { getToken } from './redux/selector';
 import { fetchData } from './canvasApi';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Courses from './pages/Courses';
 
 function App() {
   const token = useSelector(getToken);
   const [ testData, setTestData ] = useState("");
+  const history = useHistory();
 
   // this causes cors issue
-  // useEffect(() => {
+  // useEffect(() => {i
   //   if (token !== "" && testData === "") {
   //     fetchData(setTestData, "users/self");
   //   }
@@ -37,6 +38,7 @@ function App() {
                 <button onClick={() => fetchData(setTestData, "users/self")}>CLICK ME</button>
                 <h3>{testData.name}</h3>
                 <img src={testData.avatar_url}/>
+                <button onClick={() => history.push('/courses')}>courses</button>
               </div>}
             <Login/>
           </Route>

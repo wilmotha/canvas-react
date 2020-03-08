@@ -1,8 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-export async function login(token) {
-    let responseBody = {};
-    
+export async function login(token) {    
     try {
         const response = await fetch(
             `/setToken`, 
@@ -16,7 +14,6 @@ export async function login(token) {
                 }
             }
         );
-        // responseBody = await response;
     } catch(e) {
         console.log("oops... ", e);
         return false;
