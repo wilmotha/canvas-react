@@ -17,12 +17,18 @@ app.post('/setToken', (req, res) => {
     res.cookie('token', req.body.token, 
         { expires: new Date(Date.now() + 259200000), httpOnly: true, sameSite: "none"});
     res.send(true);
-}); 
+});
 
 // make get requests to the canvas api
 app.get('/canvas/*', (req, res) => {
+
+    // handle any querys that are part of the api call
+    let query = stringifyQuery(req.query);
+
+    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}${query}`);
+
     request({
-        url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
+        url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
         headers: {
             'Authorization': `Bearer ${req.cookies.token}`,
         }
@@ -30,9 +36,36 @@ app.get('/canvas/*', (req, res) => {
         (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 res.send({ results: body});
+                console.log("Success: ", response.statusCode);
             } else {
                 console.log("error: ", response.statusCode);
             }
         }
     );
 });
+
+
+// handle any querys that are part of the api call
+function stringifyQuery(queryArray) {
+    let query = "";
+
+    // check if query paramerters actually exist
+    if (Object.keys(queryArray).length !== 0) {
+        query = "?";
+        // sort through each one and convert it to string
+        Object.keys(queryArray).map(key => {
+            // array querys need to be handled a little diffrent
+            if (Array.isArray(queryArray[key])) {
+                query += queryArray[key].map(elem => `${key}[]=${elem}&`);
+                // this is to get rid of a random , that keeps showing up
+                // no idea why
+                query = query.replace(',', '');
+            } else {
+                query += `${key}=${queryArray[key]}&`
+            }
+        });
+        // get rid of the trailing & that the above code adds
+        query = query.slice(0, -1);
+    }
+    return query;
+}

@@ -42,5 +42,5 @@ export async function fetchData(setData, toFetch = "") {
         console.log("oops... ", e);
     }
     setData(JSON.parse(responseBody.results));
-    console.log(JSON.parse(responseBody.results));
+    // console.log(JSON.parse(responseBody.results));
 }
