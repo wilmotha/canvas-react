@@ -41,3 +41,35 @@ export async function fetchData(setData, toFetch = "") {
     setData(JSON.parse(responseBody.results));
     // console.log(JSON.parse(responseBody.results));
 }
+
+export async function postData(data, toPost = "") {
+    try {
+        const response = await fetch(
+        `/post/${toPost}`,
+        {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }   
+        });
+    } catch(e) {
+        console.log("oops... ", e);
+    }
+}
+
+export async function putData(data, toPost = "") {
+    try {
+        const response = await fetch(
+        `/put/${toPost}`,
+        {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }   
+        });
+    } catch(e) {
+        console.log("oops... ", e);
+    }
+}

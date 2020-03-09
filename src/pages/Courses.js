@@ -124,13 +124,56 @@ const color = {
 
 function Model(props) {
     
-    const style = css`
-        
+    const styles = css`
+        box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, .2), 1.5px 3px 10px 5px rgba(0, 0, 0, 0.19);
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        left: 10px;
+
+        h4 {
+            margin-top: 0;
+        }
+
+        button {
+            border: none;
+            background: none;
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 20px;
+        }
+
+        button:hover {
+            color: grey;
+            cursor: pointer;
+        }
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+        }
+
     `;
 
+    const changeName = e => {
+        
+    }
+
+    const changeColor = e => {
+        // putData()
+    }
+
     return (
-        <div>
-            yeet
+        <div css={styles}>
+            <div id="header">
+                <h4>Customize</h4>
+                <button onClick={props.setModel}>X</button>
+            </div>
+            <label>Nickname</label>
+            <input type="text" placeholder={props.name}></input>
+            <lable>Color</lable>
+            <input type="text" placeholder={props.color}></input>
         </div>
     );
 }
@@ -156,7 +199,10 @@ function CourseBox(props) {
             background: ${color};
             display: flex;
             justify-content: space-between;
+            color: ghostwhite;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
         }
+
         h2 {
             margin: 0;
         }
@@ -188,24 +234,26 @@ function CourseBox(props) {
             padding: 0;
         }
 
-        button:hovor {
+        button:hover {
             color: grey;
             cursor: pointer;
         }
     `;
 
     return (
-        <div css={styles} onClick={() => history.push(`/courses/${course.id}`)}>
-            <div class="boxes" id="title">
-                <h2>{course.name}</h2>
-                <button onClick={() => setModel(!model)}>︙</button>
+        <>
+            <div css={styles} onClick={() => history.push(`/courses/${course.id}`)}>
+                <div class="boxes" id="title">
+                    <h2>{course.name}</h2>
+                    <button onClick={() => setModel(!model)}>︙</button>
+                </div>
+                <div class="boxes" id="info">
+                    <div id="course-code">{course.course_code}</div>
+                    <div>{course.term ? course.term.name : null}</div>
+                </div>
             </div>
-            <div class="boxes" id="info">
-                <div id="course-code">{course.course_code}</div>
-                <div>{course.term ? course.term.name : null}</div>
-            </div>
-            {model ? <Model/> : null}
-        </div>
+            {model ? <Model name={course.name} asset_string={colorKey} color={color} setModel={() => setModel(false)}/> : null}
+        </>
     );
 }
 
