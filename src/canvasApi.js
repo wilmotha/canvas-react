@@ -29,7 +29,7 @@ export async function fetchData(setData, toFetch = "") {
     
     try {
         const response = await fetch(
-            `/canvas/${toFetch}`, 
+            `/get/${toFetch}`, 
             {
                 method: 'GET',
             }
@@ -58,10 +58,10 @@ export async function postData(data, toPost = "") {
     }
 }
 
-export async function putData(data, toPost = "") {
+export async function putData(data, toPut = "") {
     try {
         const response = await fetch(
-        `/put/${toPost}`,
+        `/put/${toPut}`,
         {
             method: 'POST',
             body: JSON.stringify(data),
@@ -69,6 +69,7 @@ export async function putData(data, toPost = "") {
                 'Content-Type': 'application/json'
             }   
         });
+        console.log(await response.json);
     } catch(e) {
         console.log("oops... ", e);
     }

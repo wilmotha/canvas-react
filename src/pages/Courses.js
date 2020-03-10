@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
 import { Links, useHistory } from 'react-router-dom';
-import { fetchData } from '../canvasApi';
+import { fetchData, putData } from '../canvasApi';
 import { useSelector } from 'react-redux';
 import { getID } from '../redux/selector';
 
@@ -122,14 +122,20 @@ const color = {
     }
 }
 
+// This works, but we don't have authorization:(
 function Model(props) {
-    
+    const [ name, setName ] = useState("");
+    const [ color, setColor ] = useState("");
+    const userId = useSelector(getID);
+
+
     const styles = css`
         box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, .2), 1.5px 3px 10px 5px rgba(0, 0, 0, 0.19);
         display: flex;
         flex-direction: column;
         padding: 10px;
         left: 10px;
+        justify-content: space-evenly;
 
         h4 {
             margin-top: 0;
@@ -154,14 +160,27 @@ function Model(props) {
             justify-content: space-between;
         }
 
+        #buttons button {
+            margin-right: 30px;
+        }
+
     `;
 
-    const changeName = e => {
-        
-    }
+    const handleApply = e => {
+        if (name !== "") {
+            console.log("NAME: ", name);
+            putData({'nickname': name}, `users/self/course_nicknames/${props.id}`)
+        }
 
-    const changeColor = e => {
-        // putData()
+        if (color !== "") {
+            putData({'hexcode': color}, `users/${userId}/colors/${props.asset_string}`);
+        }
+    }
+    
+    const handleCancel = e => {
+        setColor("");
+        setName("");
+        props.setModel();
     }
 
     return (
@@ -170,10 +189,16 @@ function Model(props) {
                 <h4>Customize</h4>
                 <button onClick={props.setModel}>X</button>
             </div>
+            <div>We don't have authorization :(</div>
             <label>Nickname</label>
-            <input type="text" placeholder={props.name}></input>
+            <input type="text" placeholder={props.name} onChange={(e) => setName(e.target.value)} ></input>
             <lable>Color</lable>
-            <input type="text" placeholder={props.color}></input>
+            <input type="text" placeholder={props.color} onChange={(e) => setColor(e.target.value)} ></input>
+            <br></br>
+            <div id="buttons">
+                <button onClick={handleApply}> Apply </button>
+                <button onClick={handleCancel}> Cancel </button>
+            </div>
         </div>
     );
 }
@@ -252,7 +277,7 @@ function CourseBox(props) {
                     <div>{course.term ? course.term.name : null}</div>
                 </div>
             </div>
-            {model ? <Model name={course.name} asset_string={colorKey} color={color} setModel={() => setModel(false)}/> : null}
+            {model ? <Model id={course.id} name={course.name} asset_string={colorKey} color={color} setModel={() => setModel(false)}/> : null}
         </>
     );
 }

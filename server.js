@@ -10,38 +10,18 @@ app.use(express.json());
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
+
 // set the token given by the user
 app.post('/setToken', (req, res) => {
     // secure would be set to secure in a production version of this to protect
     // the token but because secure requres https we cant use it with localhost
-    res.cookie('token', req.body.token, 
-        { expires: new Date(Date.now() + 259200000), httpOnly: true, sameSite: "none"});
+    // path is set to '/' by default which means this can be used by any path in
+    // the website
+    // httpOnly limits the cookie to being accessed only on the server
+    // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
+    res.cookie('token', req.body.token,  
+        { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3), httpOnly: true, sameSite: "none"});
     res.send(true);
-});
-
-// make get requests to the canvas api
-app.get('/canvas/*', (req, res) => {
-
-    // handle any querys that are part of the api call
-    let query = stringifyQuery(req.query);
-
-    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}${query}`);
-
-    request({
-        url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
-        headers: {
-            'Authorization': `Bearer ${req.cookies.token}`,
-        }
-        }, 
-        (error, response, body) => {
-            if (!error && response.statusCode == 200) {
-                res.send({ results: body});
-                console.log("Success: ", response.statusCode);
-            } else {
-                console.log("error: ", response.statusCode);
-            }
-        }
-    );
 });
 
 
@@ -69,3 +49,72 @@ function stringifyQuery(queryArray) {
     }
     return query;
 }
+
+// make get requests to the canvas api
+app.get('/get/*', (req, res) => {
+
+    // handle any querys that are part of the api call
+    let query = stringifyQuery(req.query);
+
+    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}${query}`);
+
+    request({
+        url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
+        headers: {
+            'Authorization': `Bearer ${req.cookies.token}`,
+        }
+        }, 
+        (error, response, body) => {
+            if (!error && response.statusCode == 200) {
+                res.send({ results: body});
+                console.log("Success: ", response.statusCode);
+            } else {
+                console.log("Error: ", response.statusCode);
+            }
+        }
+    );
+});
+
+app.post('/post/*', (req, res) => {
+    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}`);
+    console.log("body: ", req.body);
+
+    request({
+        url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${req.cookies.token}`,
+        },
+        body: JSON.stringify(req.body)
+    },
+    (error, response, body) => {
+        if(!error && response.statusCode == 200) {
+            console.log("Success: ", response.statusCode);
+        } else {
+            console.log("Error: ", response.statusCode);
+        }
+    });
+});
+
+// #7986CB
+app.post('/put/*', (req, res) => {
+    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}`);
+    console.log("body: ", req.body);
+
+    request({
+        url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${req.cookies.token}`,
+        },
+        body: JSON.stringify(req.body)
+    },
+    (error, response, body) => {
+        if(!error && response.statusCode == 200) {
+            console.log("Success: ", response.statusCode);
+        } else {
+            console.log("Error: ", response.statusCode);
+            console.log("Body: ", body);
+        }
+    });
+});

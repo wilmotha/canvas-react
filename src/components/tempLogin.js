@@ -9,7 +9,7 @@ export default function Login(props) {
     const token = useSelector(getToken);
 
     const setId = user => {
-        console.log(user.id);
+        console.log(user);
         dispatch(set_id(user.id));
     }
 

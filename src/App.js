@@ -42,9 +42,10 @@ function App() {
               </div>}
             <Login/>
           </Route>
-          <Route path="/courses">
+          <Route exact path="/courses">
             <Courses/>
           </Route>
+
         </Switch>
       </main>
     </div>
