@@ -283,8 +283,8 @@ function CourseBox(props) {
 }
 
 export default function Courses() {
-    const [ userCourses, setUserCourses ] = useState(tempCourses);
-    const [ courseColors, setColors ] = useState(color)
+    const [ userCourses, setUserCourses ] = useState([]);
+    const [ courseColors, setColors ] = useState({})
     const userId = useSelector(getID);
 
     const styles = css`
@@ -295,13 +295,13 @@ export default function Courses() {
         }
     `;
 
-    // useEffect(() => {
-    //     if (userCourses.length === 0) {
-    //         console.log(userId);
-    //         fetchData(setUserCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
-    //         fetchData(setColors, `users/${userId}/colors`);
-    //     }
-    // }, [ userCourses ])
+    useEffect(() => {
+        if (userCourses.length === 0) {
+            console.log(userId);
+            fetchData(setUserCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
+            fetchData(setColors, `users/${userId}/colors`);
+        }
+    }, [ userCourses ])
 
     return (
         <div css={styles}>

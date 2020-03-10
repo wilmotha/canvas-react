@@ -5,3 +5,7 @@ export function getToken(state) {
 export function getID(state) {
     return state.id;
 }
+
+export function getCourses(state) {
+    return state.courses;
+}

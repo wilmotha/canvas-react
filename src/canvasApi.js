@@ -1,9 +1,21 @@
 import fetch from 'isomorphic-unfetch';
 
+export async function checkLoggedIn(setLoggedIn) {
+    const response = await fetch(
+        '/loggedIn',
+        {
+            method: 'GET'
+        }
+    )
+    const responseBody = await response.json();
+    console.log("YEEt", responseBody);
+    setLoggedIn(responseBody);
+}
+
 export async function login(token) {    
     try {
         const response = await fetch(
-            `/setToken`, 
+            `/login`, 
             {
                 method: 'POST',
                 body: JSON.stringify({
@@ -19,6 +31,16 @@ export async function login(token) {
         return false;
     }
     return true;
+}
+
+export async function logout() {
+    const response = await fetch(
+        '/logout',
+        {
+            method: 'GET',
+            credentials: 'include'
+        }
+    );
 }
 
 // this function requires you pass it your token,

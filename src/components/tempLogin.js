@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { set_token, set_id } from '../redux/actions';
+import { set_token, set_id, remove_courses } from '../redux/actions';
 import { getToken } from '../redux/selector';
-import { login, fetchData } from '../canvasApi';
+import { login, fetchData, logout } from '../canvasApi';
 
 export default function Login(props) {
     const dispatch = useDispatch();
@@ -24,13 +24,19 @@ export default function Login(props) {
 
     return (
         <div>
-            {!token ? 
+        {console.log("LOGGEDIN: ", props.loggedIn)}
+            {!props.loggedIn ? <>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="token"><b>Token</b></label>
                     <input type="text" placeholder="Enter Token" name="token" required></input>
                     <button type="submit">Login</button>
-                </form> : 
-                <button onClick={() => dispatch(set_token(false))}>Logout</button>
+                </form> 
+                <p> To get your token go to your canvas page,
+                  then go to accounts->settings and then under
+                  approved intergrations click + New Access Token
+                </p> 
+                </> : 
+                <button onClick={() => (logout(), dispatch(remove_courses()))}>Logout</button>
             }
         </div>
     );

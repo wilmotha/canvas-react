@@ -5,25 +5,42 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 
+const TOKEN = 'token';
+
 app.use(cookieParser());
 app.use(express.json());
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
+app.get('/loggedIn', (req, res) => {
+    if ((TOKEN in req.cookies) && req.cookies[TOKEN] != null) {
+        console.log("cookies:): ", req.cookies);
+        res.send(true);
+    } else {
+        res.send(false);
+    }
+});
 
 // set the token given by the user
-app.post('/setToken', (req, res) => {
+app.post('/login', (req, res) => {
+    console.log("?????");
     // secure would be set to secure in a production version of this to protect
     // the token but because secure requres https we cant use it with localhost
     // path is set to '/' by default which means this can be used by any path in
     // the website
     // httpOnly limits the cookie to being accessed only on the server
     // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
-    res.cookie('token', req.body.token,  
-        { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3), httpOnly: true, sameSite: "none"});
-    res.send(true);
+    res.cookie(TOKEN, req.body.token,  
+        { path: '/', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3), httpOnly: true, sameSite: "none"});
+    console.log(res.cookie);
 });
 
+
+app.get('/logout', (req, res) => {
+    console.log("cookies before: ", req.cookies);
+    res.clearCookie(TOKEN, { path: '/', httpOnly: true, sameSite: "none"});  
+    console.log("cookies after: ", req.cookies);
+});
 
 // handle any querys that are part of the api call
 function stringifyQuery(queryArray) {
@@ -61,7 +78,7 @@ app.get('/get/*', (req, res) => {
     request({
         url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
         headers: {
-            'Authorization': `Bearer ${req.cookies.token}`,
+            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
         }
         }, 
         (error, response, body) => {
@@ -83,7 +100,7 @@ app.post('/post/*', (req, res) => {
         url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${req.cookies.token}`,
+            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
         },
         body: JSON.stringify(req.body)
     },
@@ -105,7 +122,7 @@ app.post('/put/*', (req, res) => {
         url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer ${req.cookies.token}`,
+            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
         },
         body: JSON.stringify(req.body)
     },
