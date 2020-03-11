@@ -3,8 +3,9 @@ import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
 import { Links, useHistory } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
-import { useSelector } from 'react-redux';
-import { getID } from '../redux/selector';
+import { useSelector, useDispatch } from 'react-redux';
+import { getID, getCourses, getColors } from '../redux/selector';
+import { store_courses, remove_courses, store_colors } from '../redux/actions';
 
 const tempCourses = [
     {
@@ -127,6 +128,7 @@ function Model(props) {
     const [ name, setName ] = useState("");
     const [ color, setColor ] = useState("");
     const userId = useSelector(getID);
+    const dispatch = useDispatch();
 
 
     const styles = css`
@@ -175,6 +177,9 @@ function Model(props) {
         if (color !== "") {
             putData({'hexcode': color}, `users/${userId}/colors/${props.asset_string}`);
         }
+
+        // this is done to force a re fetch of the courses with changed data!
+        dispatch(remove_courses);
     }
     
     const handleCancel = e => {
@@ -209,7 +214,7 @@ function CourseBox(props) {
     const [ model, setModel ] = useState(false);
     const colorKey = `course_${course.id}`;
     // set colors for non user colors
-    const color = props.color.custom_colors[colorKey] != null ? props.color.custom_colors[colorKey] : '#394B58';
+    const color = props.color.custom_colors ? (props.color.custom_colors[colorKey] != null ? props.color.custom_colors[colorKey] : '#394B58') : '#394B58';
 
     const styles = css`
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2), 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
@@ -283,8 +288,9 @@ function CourseBox(props) {
 }
 
 export default function Courses() {
-    const [ userCourses, setUserCourses ] = useState([]);
-    const [ courseColors, setColors ] = useState({})
+    const dispatch = useDispatch();
+    const courses = useSelector(getCourses);
+    const colors = useSelector(getColors);
     const userId = useSelector(getID);
 
     const styles = css`
@@ -295,22 +301,30 @@ export default function Courses() {
         }
     `;
 
+    const setCourses = courses => {
+        dispatch(store_courses(courses));
+    }
+
+    const setColors = color => {
+        dispatch(store_colors(color));
+    }
+
     useEffect(() => {
-        if (userCourses.length === 0) {
+        if (courses.length === 0) {
             console.log(userId);
-            fetchData(setUserCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
+            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
             fetchData(setColors, `users/${userId}/colors`);
         }
-    }, [ userCourses ])
+    }, [ courses, colors ]);
 
     return (
         <div css={styles}>
             <h1>Courses</h1>
-            {console.log("COURSES: ", userCourses)}
-            {console.log("Colors: ", courseColors)}
+            {console.log("COURSES: ", courses)}
+            {console.log("Colors: ", colors)}
             <div id="course-container">
-                {userCourses.map(course => (
-                    <CourseBox key={course.id} color={courseColors} course={course}/>
+                {courses.map(course => (
+                    <CourseBox key={course.id} color={colors} course={course}/>
                 ))}
             </div>
         </div>

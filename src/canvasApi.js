@@ -8,7 +8,6 @@ export async function checkLoggedIn(setLoggedIn) {
         }
     )
     const responseBody = await response.json();
-    console.log("YEEt", responseBody);
     setLoggedIn(responseBody);
 }
 
@@ -26,11 +25,11 @@ export async function login(token) {
                 }
             }
         );
+        return await response.json();
     } catch(e) {
         console.log("oops... ", e);
         return false;
     }
-    return true;
 }
 
 export async function logout() {
@@ -41,6 +40,7 @@ export async function logout() {
             credentials: 'include'
         }
     );
+    return await response.json();
 }
 
 // this function requires you pass it your token,

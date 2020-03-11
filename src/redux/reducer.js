@@ -1,4 +1,9 @@
-import { SET_TOKEN, RESET_TOKEN, SET_ID, STORE_COURSES, REMOVE_COURSES} from './actions';
+import { 
+    SET_TOKEN, RESET_TOKEN, 
+    SET_ID, 
+    STORE_COURSES, REMOVE_COURSES,
+    STORE_COLORS, REMOVE_COLORS 
+} from './actions';
 
 function tokenReducer(state = "", action) {
     switch(action.type) {
@@ -21,13 +26,25 @@ function idReducer(state = 0, action) {
 }
 
 // set timer for this to be reset
-function coursesReducer(state = {}, action) {
+function coursesReducer(state = [], action) {
     switch (action.type) {
         case STORE_COURSES:
             return action.courses;
         case REMOVE_COURSES:
-            return {};
+            return [];
         default:
+            return state;
+    }
+}
+
+function colorsReducer(state = {}, action) {
+    switch (action.type) {
+        case STORE_COLORS:
+            return action.colors;
+        case REMOVE_COLORS:
+        case REMOVE_COURSES:
+            return {}
+        default:   
             return state;
     }
 }
@@ -36,6 +53,7 @@ export default function rootReducer(state = {}, action) {
     return {
         token: tokenReducer(state.token, action),
         id: idReducer(state.id, action),
-        courses: coursesReducer(state.courses, action)
+        courses: coursesReducer(state.courses, action),
+        colors: colorsReducer(state.colors, action)
     }
 }

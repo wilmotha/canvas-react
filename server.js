@@ -23,7 +23,6 @@ app.get('/loggedIn', (req, res) => {
 
 // set the token given by the user
 app.post('/login', (req, res) => {
-    console.log("?????");
     // secure would be set to secure in a production version of this to protect
     // the token but because secure requres https we cant use it with localhost
     // path is set to '/' by default which means this can be used by any path in
@@ -31,15 +30,16 @@ app.post('/login', (req, res) => {
     // httpOnly limits the cookie to being accessed only on the server
     // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
     res.cookie(TOKEN, req.body.token,  
-        { path: '/', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3), httpOnly: true, sameSite: "none"});
-    console.log(res.cookie);
+        { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 3)), httpOnly: true, sameSite: "none"});
+    res.send(true);
 });
 
 
 app.get('/logout', (req, res) => {
     console.log("cookies before: ", req.cookies);
-    res.clearCookie(TOKEN, { path: '/', httpOnly: true, sameSite: "none"});  
+    res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});  
     console.log("cookies after: ", req.cookies);
+    res.send(false);
 });
 
 // handle any querys that are part of the api call

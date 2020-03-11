@@ -1,27 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import Login from './components/tempLogin';
-import { useSelector } from 'react-redux';
-import { getToken, getCourses } from './redux/selector';
+import Login from './components/login';
+import { useSelector, useDispatch } from 'react-redux';
+import { getID } from './redux/selector';
 import { fetchData, checkLoggedIn } from './canvasApi';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
+import { set_id, remove_courses } from './redux/actions';
 
 function App() {
-  const [loggedIn, setLoggedIn ] = useState(false);
-  const courses = useSelector(getCourses);
+  const [ loggedIn, setLoggedIn ] = useState(true);
+  const [ watch, setWatch ] = useState(loggedIn);
+  const dispatch = useDispatch();
+  const id = useSelector(getID);
+
+  const setId = user => {
+    console.log(user);
+    dispatch(set_id(user.id));
+  }
 
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
-  }, [ courses ])
+    if (loggedIn && id === "") {  
+      fetchData(setId, "users/self");
+    }
+  }, [ watch ]);
 
   return (
     <div>
       {/* Navbar */}
-      <Login loggedIn={loggedIn} />
+      <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
       {loggedIn ? <main>
         <Switch>
           <Route exact path="/">
+            <Redirect to='/courses'/>
           </Route>
           <Route exact path="/courses">
             <Courses/>

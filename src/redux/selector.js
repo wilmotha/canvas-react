@@ -9,3 +9,7 @@ export function getID(state) {
 export function getCourses(state) {
     return state.courses;
 }
+
+export function getColors(state) {
+    return state.colors
+}
