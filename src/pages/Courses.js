@@ -316,7 +316,6 @@ export default function Courses() {
             fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
             fetchData(setColors, `users/${userId}/colors`);
         } else {
-            console.log("CUCK ME DADDY");
             const tempCourses = courses;
             setCourses(tempCourses);
         }
