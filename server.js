@@ -10,12 +10,15 @@ const TOKEN = 'token';
 app.use(cookieParser());
 app.use(express.json());
 
+// store login in redux, and reset this on every call to server, if fails
+// redirect to login.
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get('/loggedIn', (req, res) => {
     if ((TOKEN in req.cookies) && req.cookies[TOKEN] != null) {
-        console.log("cookies:): ", req.cookies);
-        res.send(true);
+        res.status(200).send(true);
     } else {
         res.send(false);
     }
@@ -83,9 +86,10 @@ app.get('/get/*', (req, res) => {
         }, 
         (error, response, body) => {
             if (!error && response.statusCode == 200) {
-                res.send({ results: body});
+                res.stats(200).send({ results: body});
                 console.log("Success: ", response.statusCode);
             } else {
+                res.status(response.statusCode);
                 console.log("Error: ", response.statusCode);
             }
         }
@@ -107,8 +111,10 @@ app.post('/post/*', (req, res) => {
     (error, response, body) => {
         if(!error && response.statusCode == 200) {
             console.log("Success: ", response.statusCode);
+            res.status(response.statusCode).end();
         } else {
             console.log("Error: ", response.statusCode);
+            res.status(response.statusCode).end();
         }
     });
 });
@@ -129,9 +135,11 @@ app.post('/put/*', (req, res) => {
     (error, response, body) => {
         if(!error && response.statusCode == 200) {
             console.log("Success: ", response.statusCode);
+            res.status(response.statusCode).end();
         } else {
             console.log("Error: ", response.statusCode);
             console.log("Body: ", body);
+            res.status(response.statusCode).end();
         }
     });
 });
