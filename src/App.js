@@ -1,50 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import Login from './components/tempLogin';
-import { useSelector } from 'react-redux';
-import { getToken } from './redux/selector';
-import { fetchData } from './canvasApi';
-import { Switch, Route } from 'react-router-dom';
+import Login from './components/login';
+import { useSelector, useDispatch } from 'react-redux';
+import { getID } from './redux/selector';
+import { fetchData, checkLoggedIn } from './canvasApi';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
+import CoursePage from './pages/course';
+import { set_id, remove_courses } from './redux/actions';
 
 function App() {
-  const token = useSelector(getToken);
-  const [ testData, setTestData ] = useState("");
+  const [ loggedIn, setLoggedIn ] = useState(true);
+  const [ watch, setWatch ] = useState(loggedIn);
+  const dispatch = useDispatch();
+  const id = useSelector(getID);
 
-  // this causes cors issue
-  // useEffect(() => {
-  //   if (token !== "" && testData === "") {
-  //     fetchData(setTestData, "users/self");
-  //   }
-  // }, [ token, testData ])
+  const setId = user => {
+    console.log(user);
+    dispatch(set_id(user.id));
+  }
+
+  useEffect(() => {
+    checkLoggedIn(setLoggedIn);
+    if (loggedIn && id === "") {  
+      fetchData(setId, "users/self");
+    }
+  }, [ watch ]);
 
   return (
     <div>
       {/* Navbar */}
-      <main>
+      <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
+      {loggedIn ? <main>
         <Switch>
           <Route exact path="/">
-          {/* This can go away */}
-            {!token ? 
-              <div>
-                <h1>canvas but better?</h1>
-                <p> To get your token go to your canvas page,
-                  then go to accounts->settings and then under
-                  approved intergrations click + New Access Token
-                </p>
-              </div> : 
-              <div>
-                <h1> You are logged in! </h1>
-                <button onClick={() => fetchData(setTestData, "users/self")}>CLICK ME</button>
-                <h3>{testData.name}</h3>
-                <img src={testData.avatar_url}/>
-              </div>}
-            <Login/>
+            <Redirect to='/courses'/>
           </Route>
-          <Route path="/courses">
+          <Route exact path="/courses">
             <Courses/>
           </Route>
+          <Route path="/courses/:course_id">
+            <CoursePage/>
+          </Route>
         </Switch>
-      </main>
+      </main> : null }
     </div>
   );
 }
