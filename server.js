@@ -86,11 +86,11 @@ app.get('/get/*', (req, res) => {
         }, 
         (error, response, body) => {
             if (!error && response.statusCode == 200) {
-                res.stats(200).send({ results: body});
+                res.status(200).send({ results: body});
                 console.log("Success: ", response.statusCode);
             } else {
                 res.status(response.statusCode);
-                console.log("Error: ", response.statusCode);
+                console.log("Error: ", response.body);
             }
         }
     );
