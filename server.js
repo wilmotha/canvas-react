@@ -90,7 +90,7 @@ app.get('/get/*', (req, res) => {
                 console.log("Success: ", response.statusCode);
             } else {
                 res.status(response.statusCode);
-                console.log("Error: ", response.statusCode);
+                console.log("Error: ", response.body);
             }
         }
     );

@@ -11,7 +11,7 @@ export async function checkLoggedIn(setLoggedIn) {
     setLoggedIn(responseBody);
 }
 
-export async function login(token) {    
+export async function login(token, loginRedirect) {    
     try {
         const response = await fetch(
             `/login`, 
@@ -25,7 +25,7 @@ export async function login(token) {
                 }
             }
         );
-        return await response.json();
+        response.json().then((results) => loginRedirect(results));
     } catch(e) {
         console.log("oops... ", e);
         return false;

@@ -7,9 +7,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
 import { set_id, remove_courses } from './redux/actions';
+import Logout from './components/logout';
 
 function App() {
-  const [ loggedIn, setLoggedIn ] = useState(true);
+  const [ loggedIn, setLoggedIn ] = useState(false);
   const [ watch, setWatch ] = useState(loggedIn);
   const dispatch = useDispatch();
   const id = useSelector(getID);
@@ -21,19 +22,25 @@ function App() {
 
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
+  }, [ watch ]);
+
+  useEffect(() => {
     if (loggedIn && id === "") {  
       fetchData(setId, "users/self");
-    }
-  }, [ watch ]);
+    } 
+  }, [ loggedIn ])
 
   return (
     <div>
       {/* Navbar */}
-      <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
-      {loggedIn ? <main>
+      <Logout setWatch={setWatch}/>
+      <main>
         <Switch>
+          <Route path="/login/:prev_url">
+            <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
+          </Route>
           <Route exact path="/">
-            <Redirect to='/courses'/>
+            {/* <Redirect to='/courses'/> */}
           </Route>
           <Route exact path="/courses">
             <Courses/>
@@ -42,7 +49,7 @@ function App() {
             <CoursePage/>
           </Route>
         </Switch>
-      </main> : null }
+      </main>
     </div>
   );
 }
