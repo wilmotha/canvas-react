@@ -6,8 +6,8 @@ import { fetchData, checkLoggedIn } from './canvasApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
-import Calender from './pages/CalenderMain'
-import CalenderPage from './pages/CalenderInfo';
+// import Calender from './pages/CalenderMain'
+// import CalenderPage from './pages/CalenderInfo';
 import { set_id, remove_courses } from './redux/actions';
 import Logout from './components/logout';
 import { jsx, css } from '@emotion/core'
