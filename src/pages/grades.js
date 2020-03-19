@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID, getCourses, getColors } from '../redux/selector';
@@ -74,13 +74,12 @@ function Status(props) {
 
 function GradeBox(props) {
     const assignment = props.assignment;
-
+    const course_id = useParams().course_id;
     
-
     return (
         <div css={flexStyle}>
             <div className="row">
-                <div className="col"> {assignment.name} </div>
+                <div className="col"> <Link to={`/courses/${course_id}/assignments/${assignment.id}`}> {assignment.name} </Link> </div>
                 <div className="col"> {assignment.due_at} </div>
                 {assignment.submission && assignment.submission.workflow_state == "graded" ? <>
                     <Status submission={assignment.submission}/> 

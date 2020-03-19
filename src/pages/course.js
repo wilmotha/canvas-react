@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { Links, useHistory, useParams, Route, Switch } from 'react-router-dom';
+import { Links, useHistory, useParams, Route, Switch, useLocation } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID, getCourses } from '../redux/selector';
@@ -15,6 +15,8 @@ export default function CoursePage(props) {
     const course_id = useParams().course_id;
     const [ course, setCourse ] = useState({});
     const [ coursePages, setCoursePages ] = useState({});
+    const history = useHistory();
+    let location = useLocation();
     console.log(course_id);
 
     const setCourses = courses => {
@@ -44,8 +46,18 @@ export default function CoursePage(props) {
 
             <Route>
                 <Switch>
-                    <Route to="courses/:course_id/grades">
+                    <Route path="/courses/:course_id/grades">
                         <Grades course={course}/>
+                    </Route>
+                   
+                    <Route path="/courses/:course_id/assignments/:assignment_id">
+                        <h1>Yeet</h1>
+                    </Route>
+                    <Route path="/courses/:course_id/assignments">
+                        <h1>Assignments?</h1>
+                    </Route>
+                    <Route path="/courses/:course_id">
+                        <button onClick={() => history.push(`${location.pathname}/grades`)}>Grades</button>
                     </Route>
                 </Switch>
             </Route>
