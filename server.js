@@ -3,7 +3,7 @@ const request = require('request');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 const TOKEN = 'token';
 
@@ -32,7 +32,7 @@ app.post('/login', (req, res) => {
     // the website
     // httpOnly limits the cookie to being accessed only on the server
     // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
-    res.cookie(TOKEN, req.body.token,  
+    res.cookie(TOKEN, req.body.token,
         { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 3)), httpOnly: true, sameSite: "none"});
     res.send(true);
 });
@@ -40,7 +40,7 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
     console.log("cookies before: ", req.cookies);
-    res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});  
+    res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});
     console.log("cookies after: ", req.cookies);
     res.send(false);
 });
@@ -83,7 +83,7 @@ app.get('/get/*', (req, res) => {
         headers: {
             'Authorization': `Bearer ${req.cookies[TOKEN]}`,
         }
-        }, 
+        },
         (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 res.status(200).send({ results: body});

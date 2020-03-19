@@ -6,8 +6,11 @@ import { fetchData, checkLoggedIn } from './canvasApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
+import Calender from './pages/CalenderMain'
+import CalenderPage from './pages/CalenderInfo';
 import { set_id, remove_courses } from './redux/actions';
 import Logout from './components/logout';
+import { jsx, css } from '@emotion/core'
 
 function App() {
   const [ loggedIn, setLoggedIn ] = useState(false);
@@ -20,14 +23,15 @@ function App() {
     dispatch(set_id(user.id));
   }
 
+
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
   }, [ watch ]);
 
   useEffect(() => {
-    if (loggedIn && id === "") {  
+    if (loggedIn && id === "") {
       fetchData(setId, "users/self");
-    } 
+    }
   }, [ loggedIn ])
 
   return (
