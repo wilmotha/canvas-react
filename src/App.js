@@ -7,6 +7,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
 import { set_id, remove_courses } from './redux/actions';
+import Main_Navbar from './components/navbar-main'
+import Course_Navbar from './components/navbar-course' // for testing only, it should only appear on Course page
 import Logout from './components/logout';
 
 function App() {
@@ -32,7 +34,9 @@ function App() {
 
   return (
     <div>
-      {/* Navbar move logout button to navbar */}
+
+      <Main_Navbar css={{ display: 'inline-block', }}/>
+
       <Logout setWatch={setWatch}/>
       <main>
         <Switch>
