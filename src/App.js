@@ -34,7 +34,9 @@ function App() {
 
   return (
     <div>
+
       <Main_Navbar css={{ display: 'inline-block', }}/>
+
       <Logout setWatch={setWatch}/>
       <main>
         <Switch>
