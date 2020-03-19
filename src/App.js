@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div>
-      {/* Navbar */}
+      {/* Navbar move logout button to navbar */}
       <Logout setWatch={setWatch}/>
       <main>
         <Switch>
