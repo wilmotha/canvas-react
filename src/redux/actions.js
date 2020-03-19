@@ -16,7 +16,7 @@ export function set_token(token) {
 export function reset_token() {
     return {
         type: RESET_TOKEN,
-        token: ""
+        token: 0
     }
 }
 
@@ -29,7 +29,8 @@ export function set_id(id) {
 
 export function remove_id() {
     return {
-        type: SET_ID
+        type: SET_ID,
+        id: ""
     }
 }
 

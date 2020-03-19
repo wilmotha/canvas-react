@@ -9,9 +9,10 @@ import CoursePage from './pages/course';
 import { set_id, remove_courses } from './redux/actions';
 import Main_Navbar from './components/navbar-main'
 import Course_Navbar from './components/navbar-course' // for testing only, it should only appear on Course page
+import Logout from './components/logout';
 
 function App() {
-  const [ loggedIn, setLoggedIn ] = useState(true);
+  const [ loggedIn, setLoggedIn ] = useState(false);
   const [ watch, setWatch ] = useState(loggedIn);
   const dispatch = useDispatch();
   const id = useSelector(getID);
@@ -23,21 +24,26 @@ function App() {
 
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
+  }, [ watch ]);
+
+  useEffect(() => {
     if (loggedIn && id === "") {  
       fetchData(setId, "users/self");
-    }
-  }, [ watch ]);
+    } 
+  }, [ loggedIn ])
 
   return (
     <div>
       <Main_Navbar css={{ display: 'inline-block', }}/>
-      {/*<Course_Navbar css={{ display: 'inline-block', }}/>*/}
-      <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
-      {loggedIn ? <main>
+      <Logout setWatch={setWatch}/>
+      <main>
         <Switch>
-          {/*<Route exact path="/">
-            <Redirect to='/courses'/>
-          </Route>*/}
+          <Route path="/login/:prev_url">
+            <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
+          </Route>
+          <Route exact path="/">
+            {/* <Redirect to='/courses'/> */}
+          </Route>
           <Route exact path="/courses">
             <Courses/>
           </Route>
@@ -45,7 +51,7 @@ function App() {
             <CoursePage/>
           </Route>
         </Switch>
-      </main> : null }
+      </main>
     </div>
   );
 }

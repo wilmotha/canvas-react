@@ -310,23 +310,27 @@ export default function Courses() {
     }
 
     useEffect(() => {
-        if (courses.length === 0) {
-            console.log(userId);
+        console.log("horses: ", courses);
+        if (courses === undefined || courses.length === 0) {
+            console.log("userId: ", userId);
             fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
             fetchData(setColors, `users/${userId}/colors`);
+        } else {
+            const tempCourses = courses;
+            setCourses(tempCourses);
         }
-    }, [ courses, colors ]);
+    }, [ courses ]);
 
     return (
         <div css={styles}>
             <h1>Courses</h1>
-            {console.log("COURSES: ", courses)}
-            {console.log("Colors: ", colors)}
+            { courses === undefined ? <div> Loading! </div> :
             <div id="course-container">
                 {courses.map(course => (
                     <CourseBox key={course.id} color={colors} course={course}/>
                 ))}
             </div>
+            }
         </div>
     );
 }
