@@ -33,7 +33,7 @@ export default function CoursePage(props) {
         if (checkCourse.length > 0) {
             setCourse(checkCourse[0]);
         } 
-        fetchData(setCoursePages, `courses/${course_id}/pages?sort=title&order=asc`);
+        // fetchData(setCoursePages, `courses/${course_id}/pages?sort=title&order=asc`);
     }, [ course_id ])
 
     return (
@@ -45,7 +45,7 @@ export default function CoursePage(props) {
             <Route>
                 <Switch>
                     <Route to="courses/:course_id/grades">
-                        <Grades />
+                        <Grades course={course}/>
                     </Route>
                 </Switch>
             </Route>

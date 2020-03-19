@@ -64,6 +64,8 @@ function stringifyQuery(queryArray) {
                 query += `${key}=${queryArray[key]}&`
             }
         });
+        query = query.replace(',', '');
+
         // get rid of the trailing & that the above code adds
         query = query.slice(0, -1);
     }

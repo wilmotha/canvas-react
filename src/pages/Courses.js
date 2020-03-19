@@ -198,7 +198,7 @@ export default function Courses() {
         console.log("horses: ", courses);
         if (courses === undefined || courses.length === 0) {
             console.log("userId: ", userId);
-            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
+            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students&include[]=total_scores");
             fetchData(setColors, `users/${userId}/colors`);
         } else {
             const tempCourses = courses;
