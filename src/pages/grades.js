@@ -8,20 +8,32 @@ import { getID, getCourses, getColors } from '../redux/selector';
 import { store_courses, remove_courses, store_colors } from '../redux/actions';
 
 const flexStyle = css`
-        display: flex;
-        flex-direction: horizontal;
-        flex-wrap: wrap;
-        margin: 10px 0 10px 0;
-        padding: 0;
+        .header {
+            font-weight: bold;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: horizontal;
+            flex-wrap: wrap;
+            margin: 0px 0 0px 0;
+            padding: 10px 0 10px 0;
+            border-bottom: solid 1px lightgrey;
+        }
+
+        .row:not(.header):hover {
+            border-left: solid 2px blue;
+        }
 
         .col {
+            display: flex;
             flex: 1;
             box-sizing: border-box;
             flex-grow: 1;
             padding: 5px 5px;
             overflow: hidden;
             list-style: none;
-            border-bottom: solid 1px lightgrey;
+            align-items: center;
             ${'' /* max-width: 300px; */}
             height: 50px;
         }
@@ -67,16 +79,18 @@ function GradeBox(props) {
 
     return (
         <div css={flexStyle}>
-            <div className="col"> {assignment.name} </div>
-            <div className="col"> {assignment.due_at} </div>
-            {assignment.submission && assignment.submission.workflow_state == "graded" ? <>
-                <Status submission={assignment.submission}/> 
-                <div className="col"> {assignment.submission.grade} </div>  
-            </> : <>
-                <div className="col">  </div>
-                <div className="col"> / </div>
-            </>}
-            <div className="col"> {assignment.points_possible} </div>
+            <div className="row">
+                <div className="col"> {assignment.name} </div>
+                <div className="col"> {assignment.due_at} </div>
+                {assignment.submission && assignment.submission.workflow_state == "graded" ? <>
+                    <Status submission={assignment.submission}/> 
+                    <div className="col"> {assignment.submission.grade} </div>  
+                </> : <>
+                    <div className="col">  </div>
+                    <div className="col"> / </div>
+                </>}
+                <div className="col"> {assignment.points_possible} </div>
+            </div>
         </div>
     );
 }
@@ -90,6 +104,12 @@ export default function Grades(props) {
     const [ enrollment, setEnrollment ] = useState({});
     const styles = css`
         margin: 25px;
+        #final-grade {
+            display: flex;
+            flex-direction: horizontal;
+            justify-content: space-between;
+            width: 300px;
+        }
     `;
 
     useEffect(() => {
@@ -117,23 +137,23 @@ export default function Grades(props) {
 
 
     return (
-        <div css={styles}>
+        <div css={styles, flexStyle}>
             <h1>Grades</h1>
             {console.log("Assignments: ", assignments)}
-            <div css={flexStyle}>
-                <div className="col"> Name </div>
-                <div className="col"> Due </div>
-                <div className="col"> Status </div>
-                <div className="col"> Score </div>
-                <div className="col"> Out of </div>
+            <div className="row header">
+                <div className="col header"> Name </div>
+                <div className="col header"> Due </div>
+                <div className="col header"> Status </div>
+                <div className="col header"> Score </div>
+                <div className="col header"> Out of </div>
             </div>
             {assignments.map(assignment => (
                 <GradeBox key={assignment.id} assignment={assignment} />         
             ))}
-            <div>
-                {console.log("DIAREA: ", props.course)}
-                <h4> {enrollment.computed_current_grade} </h4>
-                <h3> {enrollment.computed_current_score} </h3>
+            <div id="final-grade">
+                <h3> Final Grade </h3>
+                <h3> {enrollment.computed_current_grade} </h3>
+                <h3> {enrollment.computed_current_score}% </h3>
             </div>
         </div>
     )

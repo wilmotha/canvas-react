@@ -7,6 +7,8 @@ const port = process.env.PORT || 5000;
 
 const TOKEN = 'token';
 
+const userToken = ''
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -17,6 +19,7 @@ app.use(express.json());
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get('/loggedIn', (req, res) => {
+    console.log(req.cookies[TOKEN]);
     if ((TOKEN in req.cookies) && req.cookies[TOKEN] != null) {
         res.status(200).send(true);
     } else {

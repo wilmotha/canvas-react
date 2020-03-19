@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../canvasApi';
 import { useHistory, useParams } from 'react-router-dom';
 
+
 export default function Login(props) {
     const prevUrl = useParams().prev_url;
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export default function Login(props) {
                 <p> To get your token go to your canvas page,
                   then go to accounts->settings and then under
                   approved intergrations click + New Access Token
-                </p> 
+                </p>
         </div>
     );
 }
