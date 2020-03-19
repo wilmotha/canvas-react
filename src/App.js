@@ -7,6 +7,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
 import { set_id, remove_courses } from './redux/actions';
+import Main_Navbar from './components/navbar-main'
+import Course_Navbar from './components/navbar-course' // for testing only, it should only appear on Course page
 
 function App() {
   const [ loggedIn, setLoggedIn ] = useState(true);
@@ -28,13 +30,14 @@ function App() {
 
   return (
     <div>
-      {/* Navbar */}
+      <Main_Navbar css={{ display: 'inline-block', }}/>
+      {/*<Course_Navbar css={{ display: 'inline-block', }}/>*/}
       <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
       {loggedIn ? <main>
         <Switch>
-          <Route exact path="/">
+          {/*<Route exact path="/">
             <Redirect to='/courses'/>
-          </Route>
+          </Route>*/}
           <Route exact path="/courses">
             <Courses/>
           </Route>
