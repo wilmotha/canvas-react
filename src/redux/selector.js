@@ -11,5 +11,9 @@ export function getCourses(state) {
 }
 
 export function getColors(state) {
-    return state.colors
+    return state.colors;
+}
+
+export function getAssignments(state) {
+    return state.allAssignments;
 }

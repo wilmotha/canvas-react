@@ -2,7 +2,8 @@ import {
     SET_TOKEN, RESET_TOKEN, 
     SET_ID, 
     STORE_COURSES, REMOVE_COURSES,
-    STORE_COLORS, REMOVE_COLORS 
+    STORE_COLORS, REMOVE_COLORS, 
+    ADD_COURSE_ASSIGNMENTS
 } from './actions';
 
 function tokenReducer(state = "", action) {
@@ -43,8 +44,22 @@ function colorsReducer(state = {}, action) {
             return action.colors;
         case REMOVE_COLORS:
         case REMOVE_COURSES:
-            return {}
+            return {};
         default:   
+            return state;
+    }
+}
+
+function assignmentsReducer(state = [], action) {
+    switch (action.type) {
+        case ADD_COURSE_ASSIGNMENTS:
+            return [
+                ...state,
+                action.assignments
+            ];
+        case REMOVE_COURSES:
+            return [];
+        default:
             return state;
     }
 }
@@ -54,6 +69,7 @@ export default function rootReducer(state = {}, action) {
         token: tokenReducer(state.token, action),
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
-        colors: colorsReducer(state.colors, action)
+        colors: colorsReducer(state.colors, action),
+        allAssignments: assignmentsReducer(state.assignments, action)
     }
 }

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { Links, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID, getCourses, getColors } from '../redux/selector';
@@ -14,7 +14,6 @@ function Model(props) {
     const [ color, setColor ] = useState("");
     const userId = useSelector(getID);
     const dispatch = useDispatch();
-
 
     const styles = css`
         box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, .2), 1.5px 3px 10px 5px rgba(0, 0, 0, 0.19);
@@ -116,10 +115,14 @@ function CourseBox(props) {
             justify-content: space-between;
             color: ghostwhite;
             text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            
         }
 
         h2 {
             margin: 0;
+            height: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #info {
@@ -158,7 +161,7 @@ function CourseBox(props) {
     return (
         <>
             <div css={styles} onClick={() => history.push(`/courses/${course.id}`)}>
-                <div class="boxes" id="title">
+                <div className="boxes" id="title">
                     <h2>{course.name}</h2>
                     <button onClick={() => setModel(!model)}>︙</button>
                 </div>
@@ -195,9 +198,7 @@ export default function Courses() {
     }
 
     useEffect(() => {
-        console.log("horses: ", courses);
         if (courses === undefined || courses.length === 0) {
-            console.log("userId: ", userId);
             fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students&include[]=total_scores");
             // fetchData(setColors, `users/${userId}/colors`);
         } else {

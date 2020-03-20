@@ -1,10 +1,8 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { Links, useHistory, useParams, Route, Switch, useLocation } from 'react-router-dom';
-import { fetchData, putData } from '../canvasApi';
+import { useHistory, useParams, Route, Switch, useLocation } from 'react-router-dom';
+import { fetchData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
-import { getID, getCourses } from '../redux/selector';
+import { getCourses } from '../redux/selector';
 import { store_courses } from '../redux/actions';
 import Grades from './grades';
 
@@ -14,10 +12,8 @@ export default function CoursePage(props) {
     const dispatch = useDispatch();
     const course_id = useParams().course_id;
     const [ course, setCourse ] = useState({});
-    const [ coursePages, setCoursePages ] = useState({});
     const history = useHistory();
     let location = useLocation();
-    console.log(course_id);
 
     const setCourses = courses => {
         dispatch(store_courses(courses));
@@ -35,14 +31,11 @@ export default function CoursePage(props) {
         if (checkCourse.length > 0) {
             setCourse(checkCourse[0]);
         } 
-        // fetchData(setCoursePages, `courses/${course_id}/pages?sort=title&order=asc`);
     }, [ course_id ])
 
     return (
         <div>
             <h1>{course.name}</h1>
-            {console.log("Course: ", course)}
-            {console.log("Pages: ", coursePages)}
 
             <Route>
                 <Switch>

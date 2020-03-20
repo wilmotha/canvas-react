@@ -2,10 +2,10 @@
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchData, putData } from '../canvasApi';
+import { fetchData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
-import { getID, getCourses, getColors } from '../redux/selector';
-import { store_courses, remove_courses, store_colors } from '../redux/actions';
+import { getCourses, getColors, getAssignments } from '../redux/selector';
+import { store_courses, add_course_assignments } from '../redux/actions';
 
 const flexStyle = css`
         .header {
@@ -76,7 +76,6 @@ function Status(props) {
 function formatDate(date) {
     let timeZoneOffset = new Date().getTimezoneOffset()/60;
     let d = new Date(date);
-    console.log(d);
     let a_p = "";
     let hour = d.getHours();
     let minutes = d.getMinutes().toString();
@@ -131,10 +130,9 @@ function GradeBox(props) {
 export default function Grades(props) {
     const course_id = useParams().course_id;
     const courses = useSelector(getCourses);
+    const allAssignments = useSelector(getAssignments);
     const dispatch = useDispatch();
     const [ assignments, setAssignments ] = useState([]);
-    const [ course, setCourse ] = useState({});
-    const [ groups, setGroups ] = useState({});
     const [ enrollment, setEnrollment ] = useState({});
     
     const styles = css`
@@ -168,32 +166,20 @@ export default function Grades(props) {
         }
     `;
 
-    useEffect(() => {
-        if (assignments === undefined || assignments.length === 0) {
-            fetchData(setAssignments,  `courses/${course_id}/assignments?include[]=submission`);
-            fetchData(setGroups, `courses/${course_id}/assignment_groups`);
-        }
-    }, [ assignments ]);
-
-
-    const setCourses = courses => {
-        dispatch(store_courses(courses));
+    const addAssignments = assignments => {
+        dispatch(add_course_assignments(assignments));  
+        setAssignments(assignments);
     }
 
     useEffect(() => {
-        if (courses === undefined || courses.length === 0) {
-            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
+        const temp = allAssignments.filter(assginments => assginments[0].course_id == course_id);
+        console.log("HERE: ", allAssignments.length === 0 && temp.length === 0);
+        if (allAssignments.length === 0 && temp.length === 0) {
+            fetchData(addAssignments,  `courses/${course_id}/assignments?include[]=submission`);
         } else {
-            const tempCourses = courses;
-            setCourses(tempCourses);
+            setAssignments(temp[0]);
         }
-        const checkCourse = courses.filter(course => course.id == course_id);
-        if (checkCourse.length > 0) {
-            setCourse(checkCourse[0]);
-            setEnrollment(checkCourse[0].enrollments ? checkCourse[0].enrollments[0] : null);
-        }
-    }, [ course_id ])
-
+    }, [ course_id ]);
 
     return (
         <div css={[styles, flexStyle]}>
@@ -217,7 +203,6 @@ export default function Grades(props) {
                         <h3> {enrollment.computed_current_grade} </h3>
                         <h3> {enrollment.computed_current_score}% </h3>
                     </div>
-                    {console.log("Groups: ", groups)}
                     <div>  </div>
                 </div>
             </div>

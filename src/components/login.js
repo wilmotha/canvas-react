@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { login } from '../canvasApi';
 import { useHistory, useParams } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 export default function Login(props) {
     const prevUrl = useParams().prev_url;
-    const dispatch = useDispatch();
     const history = useHistory();    
 
     const loginRedirect = result => {
