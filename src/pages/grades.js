@@ -182,6 +182,25 @@ export default function Grades(props) {
         }
     }, [ course_id ]);
 
+    const setCourses = courses => {
+        dispatch(store_courses(courses));
+    }
+
+    useEffect(() => {
+        if (courses === undefined || courses.length === 0) {
+            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students&include[]=total_scores");
+            // fetchData(setColors, `users/${userId}/colors`);
+        } else {
+            const tempCourses = courses;
+            setCourses(tempCourses);
+        }
+    }, [ course_id ]);
+
+    useEffect(() => {
+        const enroll = courses.filter(course => course.id == course_id)[0].enrollments[0];
+        setEnrollment(enroll);
+    }, [ courses ]);
+
     return (
         <div css={[styles, flexStyle]}>
             <h1>Grades</h1>
