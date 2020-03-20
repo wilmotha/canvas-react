@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 
 const TOKEN = 'token';
 const CANVAS_DOMAIN = "oregonstate.instructure.com"
+const LOGIN = "" // INSERT AUTH TOKEN HERE
 
 app.use(cookieParser());
 app.use(express.json());
@@ -84,7 +85,8 @@ app.get('/get/*', (req, res) => {
     request({
         url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}${query}`,
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         }
         }, 
         (error, response, body) => {
@@ -108,7 +110,8 @@ app.post('/post/*', (req, res) => {
         url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`,
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         },
         body: JSON.stringify(req.body)
     },
@@ -132,7 +135,8 @@ app.post('/put/*', (req, res) => {
         url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`,
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         },
         body: JSON.stringify(req.body)
     },

@@ -37,9 +37,9 @@ function App() {
   return (
     <div>
 
-      <Main_Navbar css={{ display: 'inline-block'}}/>
+      <Main_Navbar css={{ position: 'absolute'}}/>
 
-      <main css={{ display: 'inline-block', verticalAlign: 'top'}}>
+      <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
         <Logout setWatch={setWatch}/>
         <Switch>
           <Route path="/login/:prev_url">
