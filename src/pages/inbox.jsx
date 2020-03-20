@@ -6,10 +6,10 @@ import {css, jsx, Global} from '@emotion/core'
 // the original function is a React hook, this is a standard JS async function
 async function getConvos(user){
 	let responseBody = {};
-    
+
 	try {
 		const response = await fetch(
-			"/get/conversations", 
+			"/get/conversations",
 			{
 				method: 'GET',
 			}
@@ -59,7 +59,7 @@ class Inbox extends React.Component{
 				`}/>
 				<h1>Inbox</h1>
 				<div className="container">
-					{this.state.list.map((item) => 
+					{this.state.list.map((item) =>
 						<div className="item" key={item.id}>
 							<h2>{item.subject}</h2>
 							<h3>{item.context_name}</h3>

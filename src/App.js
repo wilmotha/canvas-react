@@ -43,9 +43,8 @@ function App() {
       <Main_Navbar css={{ position: 'absolute'}}/>
 
 
-
-      //<Logout setWatch={setWatch}/>
-      //<main>
+      <Logout setWatch={setWatch}/>
+      <main>
       <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
         <Logout setWatch={setWatch}/>
         <Switch>
@@ -66,10 +65,12 @@ function App() {
           </Route>
           <Route path="/calendar">
             <CalenderPage/>
+          </Route>
           <Route path="/inbox">
             <Inbox user={id} />
           </Route>
         </Switch>
+      </main>
       </main>
     </div>
   );
