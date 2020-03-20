@@ -173,8 +173,9 @@ export default function Grades(props) {
 
     useEffect(() => {
         const temp = allAssignments.filter(assginments => assginments[0].course_id == course_id);
-        console.log("HERE: ", allAssignments.length === 0 && temp.length === 0);
-        if (allAssignments.length === 0 && temp.length === 0) {
+        console.log("FLEET: ", temp);
+        console.log("HERE: ", allAssignments.length === 0 || temp.length === 0);
+        if (allAssignments.length === 0 || temp.length === 0) {
             fetchData(addAssignments,  `courses/${course_id}/assignments?include[]=submission`);
         } else {
             setAssignments(temp[0]);

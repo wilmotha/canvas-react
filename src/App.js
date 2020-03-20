@@ -17,8 +17,16 @@ function App() {
   const dispatch = useDispatch();
   const id = useSelector(getID);
 
+
+  // useEffect(() => {
+  //   // reset redux
+  //   const interval = setInterval(() => {
+  //     dispatch(remove_courses);
+  //   }, 1000 * 60 * 60);
+  //   return () => clearInterval(interval);
+  // }, []);
+
   const setId = user => {
-    console.log(user);
     dispatch(set_id(user.id));
   }
 

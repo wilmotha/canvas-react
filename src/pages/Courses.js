@@ -165,7 +165,7 @@ function CourseBox(props) {
                     <h2>{course.name}</h2>
                     <button onClick={() => setModel(!model)}>︙</button>
                 </div>
-                <div class="boxes" id="info">
+                <div className="boxes" id="info">
                     <div id="course-code">{course.course_code}</div>
                     <div>{course.term ? course.term.name : null}</div>
                 </div>

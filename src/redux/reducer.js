@@ -51,6 +51,8 @@ function colorsReducer(state = {}, action) {
 }
 
 function assignmentsReducer(state = [], action) {
+    console.log("CLEAR: ", action.type);
+    console.log("NOOO: ", state);
     switch (action.type) {
         case ADD_COURSE_ASSIGNMENTS:
             return [
@@ -58,6 +60,7 @@ function assignmentsReducer(state = [], action) {
                 action.assignments
             ];
         case REMOVE_COURSES:
+            
             return [];
         default:
             return state;
@@ -70,6 +73,6 @@ export default function rootReducer(state = {}, action) {
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
         colors: colorsReducer(state.colors, action),
-        allAssignments: assignmentsReducer(state.assignments, action)
+        allAssignments: assignmentsReducer(state.allAssignments, action)
     }
 }

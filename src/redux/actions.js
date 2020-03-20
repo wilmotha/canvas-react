@@ -44,7 +44,7 @@ export function store_courses(courses) {
 
 export function remove_courses() {
     return {
-        type: STORE_COURSES
+        type: REMOVE_COURSES
     }
 }
 
