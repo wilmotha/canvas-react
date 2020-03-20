@@ -65,27 +65,27 @@ export default function CalenderPage(props) {
   );
 }
 
-// class Reminder extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       reminder: "",
-//
-//     };
-//   }
-//   render() {
-//     return (
-//       <div className="Reminder">
-//         <h1>Reminders</h1>
-//         <h3>{this.state.reminder}</h3>
-//         <a href="javascript:;">
-//           Create a reminder
-//         </a>
-//       </div>
-//     );
-//   }
-//
-// }
-//
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<Reminder />, rootElement);
+class Reminder extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      reminder: "",
+
+    };
+  }
+  render() {
+    return (
+      <div className="Reminder">
+        <h1>Reminders</h1>
+        <h3>{this.state.reminder}</h3>
+        <a href="javascript:;">
+          Create a reminder
+        </a>
+      </div>
+    );
+  }
+
+}
+
+
+// export default Reminder

@@ -44,7 +44,6 @@ function App() {
 
 
       <Logout setWatch={setWatch}/>
-      <main>
       <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
         <Logout setWatch={setWatch}/>
         <Switch>
@@ -70,7 +69,6 @@ function App() {
             <Inbox user={id} />
           </Route>
         </Switch>
-      </main>
       </main>
     </div>
   );

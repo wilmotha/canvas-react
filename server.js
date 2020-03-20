@@ -6,8 +6,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const TOKEN = 'token';
-// const MyToken = '1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK';
-// var MyToken = "1002~2yM88GbngFncUDrt0JbhOT9I6fXAHurPWikNBvCGD3TZoMLVRpougIZcEK19hgL4";
 
 const CANVAS_DOMAIN = "oregonstate.instructure.com"
 const LOGIN = "" // INSERT AUTH TOKEN HERE
