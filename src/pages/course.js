@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCourses } from '../redux/selector';
 import { store_courses } from '../redux/actions';
 import Grades from './grades';
+import Course_Navbar from '../components/navbar-course'
 
 
 export default function CoursePage(props) {
@@ -36,6 +37,8 @@ export default function CoursePage(props) {
     return (
         <div>
             <h1>{course.name}</h1>
+
+            <Course_Navbar />
 
             <Route>
                 <Switch>

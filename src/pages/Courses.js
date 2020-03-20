@@ -65,7 +65,7 @@ function Model(props) {
         // this is done to force a re fetch of the courses with changed data!
         dispatch(remove_courses);
     }
-    
+
     const handleCancel = e => {
         setColor("");
         setName("");
@@ -78,7 +78,7 @@ function Model(props) {
                 <h4>Customize</h4>
                 <button onClick={props.setModel}>X</button>
             </div>
-            <div>We don't have authorization :(</div>
+            <div>We dont have authorization :(</div>
             <label>Nickname</label>
             <input type="text" placeholder={props.name} onChange={(e) => setName(e.target.value)} ></input>
             <lable>Color</lable>

@@ -1,0 +1,15 @@
+[
+  {"id": 1, "name": "Web Development - Assignment 3", "due": "March 2nd, 11:59pm"},
+  {"id": 2, "name": "Academic Advising Appointment", "due": "March 4th, 2:30pm"},
+  {"id": 3, "name": "Ethical Issues Presentation - AI", "due": "March 7th, 11:59pm"},
+  {"id": 4, "name": "CS 362 - Program 3", "due": "March 9th, 11:59pm"},
+  {"id": 5, "name": "Web Development - Assignment 4", "due": "March 12th, 11:59pm"},
+  {"id": 6, "name": "Club Meeting ", "due": "March 13th, 5:50pm"},
+  {"id": 7, "name": "Ethical Issues - Debate", "due": "March 15th, 11:59pm"},
+  {"id": 8, "name": "Final Project Proposal", "due": "March 15th, 11:59pm"},
+  {"id": 9, "name": "CS 362 - Final Exam", "due": "March 16th, 4:50pm"},
+  {"id": 10, "name": "CS 272 - Assignment 4", "due": "March 19th, 11:59pm"},
+  {"id": 11, "name": "Final Project Presentation", "due": "March 20th, 11:59pm"},
+  {"id": 12, "name": "Web Development - Final Project", "due": "March 21st, 11:59pm"},
+  {"id": 13, "name": "Ethical Issues - Team Evaluation", "due": "March 22nd, 11:59pm"},
+]

@@ -14,6 +14,12 @@ export function getColors(state) {
     return state.colors;
 }
 
+<<<<<<< HEAD
 export function getAssignments(state) {
     return state.allAssignments;
 }
+=======
+export function getEvents(state) {
+    return state.events;
+}
+>>>>>>> 65595d3aa030a02b8c89d613f3987812ec3fd44b

@@ -3,7 +3,9 @@ import {
     SET_ID, 
     STORE_COURSES, REMOVE_COURSES,
     STORE_COLORS, REMOVE_COLORS, 
-    ADD_COURSE_ASSIGNMENTS
+    ADD_COURSE_ASSIGNMENTS,
+    STORE_COLORS, REMOVE_COLORS,
+    STORE_EVENTS, REMOVE_EVENTS
 } from './actions';
 
 function tokenReducer(state = "", action) {
@@ -60,7 +62,18 @@ function assignmentsReducer(state = [], action) {
                 action.assignments
             ];
         case REMOVE_COURSES:
-            
+            return [];
+        default:
+            return state;
+    }
+}
+
+function eventReducer(state = [], action) {
+    switch (action.type) {
+        case STORE_EVENTS:
+            return action.events;
+        case REMOVE_COURSES:
+        case REMOVE_EVENTS:
             return [];
         default:
             return state;
@@ -73,6 +86,7 @@ export default function rootReducer(state = {}, action) {
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
         colors: colorsReducer(state.colors, action),
-        allAssignments: assignmentsReducer(state.allAssignments, action)
+        allAssignments: assignmentsReducer(state.allAssignments, action),
+        events: eventReducer(state.events, action)
     }
 }

@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react';
 import Login from './components/login';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,10 +7,13 @@ import { fetchData, checkLoggedIn } from './canvasApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
+import CalenderPage from './pages/calender';
 import { set_id, remove_courses } from './redux/actions';
 import Main_Navbar from './components/navbar-main'
-import Course_Navbar from './components/navbar-course' // for testing only, it should only appear on Course page
 import Logout from './components/logout';
+import Account from './pages/account'
+import Inbox from './pages/inbox'
+import {css, jsx, Global} from '@emotion/core'
 
 function App() {
   const [ loggedIn, setLoggedIn ] = useState(false);
@@ -30,23 +34,26 @@ function App() {
     dispatch(set_id(user.id));
   }
 
+
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
   }, [ watch ]);
 
   useEffect(() => {
-    if (loggedIn && id === "") {  
+    if (loggedIn && id === "") {
       fetchData(setId, "users/self");
-    } 
+    }
   }, [ loggedIn ])
 
   return (
     <div>
 
-      {/* <Main_Navbar css={{ display: 'inline-block', }}/> */}
+      <Main_Navbar css={{ position: 'absolute'}}/>
 
       <Logout setWatch={setWatch}/>
       <main>
+      <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
+        <Logout setWatch={setWatch}/>
         <Switch>
           <Route path="/login/:prev_url">
             <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
@@ -57,10 +64,20 @@ function App() {
           <Route exact path="/courses">
             <Courses/>
           </Route>
+          <Route path="/account">
+            <Account />
+          </Route>
           <Route path="/courses/:course_id">
             <CoursePage/>
           </Route>
+          <Route path="/calendar">
+            <CalenderPage/>
+          </Route>
+          <Route path="/inbox">
+            <Inbox user={id} />
+          </Route>
         </Switch>
+      </main>
       </main>
     </div>
   );
