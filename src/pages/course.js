@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getID, getCourses } from '../redux/selector';
 import { store_courses } from '../redux/actions';
 import Grades from './grades';
+import Course_Navbar from '../components/navbar-course'
 
 
 export default function CoursePage(props) {
@@ -41,6 +42,8 @@ export default function CoursePage(props) {
             <h1>{course.name}</h1>
             {console.log("Course: ", course)}
             {console.log("Pages: ", coursePages)}
+
+            <Course_Navbar />
 
             <Route>
                 <Switch>

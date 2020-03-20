@@ -7,8 +7,10 @@ const port = process.env.PORT || 5001;
 
 const TOKEN = 'token';
 // const MyToken = '1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK';
-var MyToken = "1002~2yM88GbngFncUDrt0JbhOT9I6fXAHurPWikNBvCGD3TZoMLVRpougIZcEK19hgL4";
+// var MyToken = "1002~2yM88GbngFncUDrt0JbhOT9I6fXAHurPWikNBvCGD3TZoMLVRpougIZcEK19hgL4";
 
+const CANVAS_DOMAIN = "oregonstate.instructure.com"
+const LOGIN = "" // INSERT AUTH TOKEN HERE
 
 app.use(cookieParser());
 app.use(express.json());
@@ -37,6 +39,7 @@ app.post('/login', (req, res) => {
     // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
     res.cookie(TOKEN, req.body.token,
         { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 3)), httpOnly: true, sameSite: "none"});
+    res.status(200)
     res.send(true);
 });
 
@@ -79,13 +82,17 @@ app.get('/get/*', (req, res) => {
     // handle any querys that are part of the api call
     let query = stringifyQuery(req.query);
 
-    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}${query}`);
+    console.log(`\nRequest made for: https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}${query}`);
+    console.log("TOKEN: " + req.cookies[TOKEN])
 
     request({
-        url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
+        url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}${query}`,
         headers: {
             // 'Authorization': `Bearer ${req.cookies[MyToken]}`,
-            'Authorization': `Bearer ${MyToken}`,
+            //'Authorization': `Bearer ${MyToken}`,
+
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         }
         },
         (error, response, body) => {
@@ -101,14 +108,16 @@ app.get('/get/*', (req, res) => {
 });
 
 app.post('/post/*', (req, res) => {
-    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}`);
+    console.log(`\nRequest made for: https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`);
     console.log("body: ", req.body);
+    console.log("TOKEN: " + req.cookies[TOKEN])
 
     request({
-        url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
+        url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`,
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         },
         body: JSON.stringify(req.body)
     },
@@ -125,14 +134,15 @@ app.post('/post/*', (req, res) => {
 
 // #7986CB
 app.post('/put/*', (req, res) => {
-    console.log(`\nRequest made for: https://canvas.instructure.com/api/v1/${req.params[0]}`);
+    console.log(`\nRequest made for: https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`);
     console.log("body: ", req.body);
 
     request({
-        url: `https://canvas.instructure.com/api/v1/${req.params[0]}`,
+        url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}`,
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            'Authorization': `Bearer ${LOGIN}`,
         },
         body: JSON.stringify(req.body)
     },
