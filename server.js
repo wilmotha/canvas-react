@@ -86,7 +86,6 @@ app.get('/get/*', (req, res) => {
         headers: {
             // 'Authorization': `Bearer ${req.cookies[MyToken]}`,
             'Authorization': `Bearer ${MyToken}`,
-
         }
         },
         (error, response, body) => {

@@ -4,9 +4,37 @@ import React, { useEffect, useState } from 'react';
 import { Links, useHistory, useParams, Route, Switch } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEvents } from '../redux/selector';
+import { getID, getEvents } from '../redux/selector';
 import { store_events } from '../redux/actions';
 // import Data from './data/calenderEvents.json';
+
+export default function CalenderPage(props) {
+  const events = useSelector(getEvents);
+  const dispatch = useDispatch();
+
+
+  const setEvents = events => {
+    dispatch(store_events(events));
+  }
+
+  useEffect(() => {
+    if(events === undefined || events.length === 0) {
+      // i think that this should be all you need it should
+      // set event to list of events in a json object
+      fetchData(setEvents, "calendar_events");
+    }
+  }, [ events ]);
+
+  return (
+    <div>
+      <h1>Calender</h1>
+      {/* look at the browser console and this should be printed
+          use that to know what variable names are */}
+      {console.log("Events: ", events)}
+    </div>
+  );
+}
+
 
 //prob wont need this anymore if we calling from api
 // function Events() {
@@ -62,30 +90,3 @@ import { store_events } from '../redux/actions';
 //   );
 //   }
 // }
-
-export default function CalenderPage(props) {
-  const events = useSelector(getEvents);
-  const dispatch = useDispatch();
-
-  
-  const setEvents = events => {
-    dispatch(store_events(events));
-  }
-
-  useEffect(() => {
-    if(events === undefined || events.length === 0) {
-      // i think that this should be all you need it should
-      // set event to list of events in a json object
-      fetchData(setEvents, "calendar_events");
-    }
-  }, [ events ]);
-
-  return (
-    <div>
-      <h1>Calender</h1>
-      {/* look at the browser console and this should be printed
-          use that to know what variable names are */}
-      {console.log("Events: ", events)}
-    </div>
-  );
-}
