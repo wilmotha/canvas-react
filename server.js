@@ -6,8 +6,7 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 const TOKEN = 'token';
-// const MyToken = '1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK';
-var MyToken = "1002~2yM88GbngFncUDrt0JbhOT9I6fXAHurPWikNBvCGD3TZoMLVRpougIZcEK19hgL4";
+var MyToken = "1002~5Wq5GmEiaEsDV8FaoPOIvl2MwDvEpT0FZr9WNz8AAXiVC6bnHfTUEE1qxFm6Udgd";
 
 
 app.use(cookieParser());

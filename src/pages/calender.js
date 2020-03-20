@@ -1,11 +1,12 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css, Global } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
 import { Links, useHistory, useParams, Route, Switch } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID, getEvents } from '../redux/selector';
 import { store_events } from '../redux/actions';
+import ReactDOM from 'react-dom';
 // import Data from './data/calenderEvents.json';
 
 export default function CalenderPage(props) {
@@ -31,6 +32,7 @@ export default function CalenderPage(props) {
 
   return (
     <div>
+
     <h1>Calendar Events</h1>
     <h2>{events[0].title}</h2>
     <h4>Start at: {events[0].start_at}</h4>
@@ -57,14 +59,33 @@ export default function CalenderPage(props) {
     <h4>End at: {events[5].end_at}</h4>
     <h4>Location Name: {events[5].location_name}</h4>
 
-
-
       {console.log("Events: ", events)}
 
     </div>
   );
 }
 
-/*
-
-*/
+// class Reminder extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       reminder: "",
+//
+//     };
+//   }
+//   render() {
+//     return (
+//       <div className="Reminder">
+//         <h1>Reminders</h1>
+//         <h3>{this.state.reminder}</h3>
+//         <a href="javascript:;">
+//           Create a reminder
+//         </a>
+//       </div>
+//     );
+//   }
+//
+// }
+//
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<Reminder />, rootElement);

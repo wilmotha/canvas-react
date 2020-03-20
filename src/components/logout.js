@@ -1,8 +1,10 @@
+/** @jsx jsx */
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { remove_courses, remove_id } from '../redux/actions';
 import { logout } from '../canvasApi';
 import { useHistory } from 'react-router-dom';
+import {css, jsx, Global} from '@emotion/core'
 
 export default function Logout(props) {
     const dispatch = useDispatch();
@@ -16,6 +18,6 @@ export default function Logout(props) {
     }
 
     return (
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogout} css={{display: 'inline-block'}}>Logout</button>
     );
 }
