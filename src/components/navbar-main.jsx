@@ -10,6 +10,7 @@ class Nav_Main extends React.Component {
 			<div className="main-navbar">
 				<Global styles={css`
 					.main-navbar{
+						position: fixed;
 						background-color: #d0d0d0;
 						display: inline-block;
 						height: 100vh;
@@ -32,11 +33,11 @@ class Nav_Main extends React.Component {
 						color: #ffffff;
 					}
 				`}/>
-   			    <Logout setWatch={this.props.setWatch}/>
 				<NavLink to="/account" className="main-navlink" activeClassName="main-nav-active">Account</NavLink>
 				<NavLink to="/courses" className="main-navlink" activeClassName="main-nav-active">Courses</NavLink>
 				<NavLink to="/calendar" className="main-navlink" activeClassName="main-nav-active">Calendar</NavLink>
 				<NavLink to="/inbox" className="main-navlink" activeClassName="main-nav-active">Inbox</NavLink>
+   			    <Logout setWatch={this.props.setWatch}/>
 			</div>
 			
 		)
