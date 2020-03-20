@@ -19,8 +19,8 @@ async function getConvos(user){
 		console.log("oops... ", e);
 	}
 
-	console.log("getConvos")
-	console.log(responseBody.results);
+	//console.log("getConvos")
+	//console.log(responseBody.results);
 	return JSON.parse(responseBody.results);
 }
 
@@ -34,10 +34,10 @@ class Inbox extends React.Component{
 	}
 
 	async componentDidMount(){
-		console.log(this.props.user)
+		//console.log(this.props.user)
 		var Convos = await getConvos(this.props.user);
-		console.log("Conversation list:")
-		console.log(Convos)
+		//console.log("Conversation list:")
+		//console.log(Convos)
 		this.setState({list: Convos})
 	}
 

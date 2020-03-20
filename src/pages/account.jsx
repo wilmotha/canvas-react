@@ -20,8 +20,8 @@ async function getProfile(){
 		console.log("oops... ", e);
 	}
 
-	console.log("getProfile")
-	console.log(responseBody.results);
+	//console.log("getProfile")
+	//console.log(responseBody.results);
 	return JSON.parse(responseBody.results);
 }
 
@@ -38,8 +38,8 @@ class Account_Page extends React.Component{
 
 	async componentDidMount(){
 		var profile = await getProfile();
-		console.log("Profile object:")
-		console.log(profile)
+		//console.log("Profile object:")
+		//console.log(profile)
 		this.setState({
 			name: profile.name,
 			email: profile.primary_email,
