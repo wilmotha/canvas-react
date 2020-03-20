@@ -6,6 +6,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const TOKEN = 'token';
+// const MyToken = '1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK';
+// var MyToken = "1002~2yM88GbngFncUDrt0JbhOT9I6fXAHurPWikNBvCGD3TZoMLVRpougIZcEK19hgL4";
+
 const CANVAS_DOMAIN = "oregonstate.instructure.com"
 const LOGIN = "" // INSERT AUTH TOKEN HERE
 
@@ -34,7 +37,7 @@ app.post('/login', (req, res) => {
     // the website
     // httpOnly limits the cookie to being accessed only on the server
     // expires in 3 days represented by milliseconds * seconds * minutes * hours * days
-    res.cookie(TOKEN, req.body.token,  
+    res.cookie(TOKEN, req.body.token,
         { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 3)), httpOnly: true, sameSite: "none"});
     res.status(200)
     res.send(true);
@@ -43,7 +46,7 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
     console.log("cookies before: ", req.cookies);
-    res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});  
+    res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});
     console.log("cookies after: ", req.cookies);
     res.send(false);
 });
@@ -85,10 +88,13 @@ app.get('/get/*', (req, res) => {
     request({
         url: `https://${CANVAS_DOMAIN}/api/v1/${req.params[0]}${query}`,
         headers: {
+            // 'Authorization': `Bearer ${req.cookies[MyToken]}`,
+            //'Authorization': `Bearer ${MyToken}`,
+
             //'Authorization': `Bearer ${req.cookies[TOKEN]}`,
             'Authorization': `Bearer ${LOGIN}`,
         }
-        }, 
+        },
         (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 res.status(200).send({ results: body});

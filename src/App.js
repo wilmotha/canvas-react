@@ -7,6 +7,7 @@ import { fetchData, checkLoggedIn } from './canvasApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
+import CalenderPage from './pages/calender';
 import { set_id, remove_courses } from './redux/actions';
 import Main_Navbar from './components/navbar-main'
 import Logout from './components/logout';
@@ -25,14 +26,15 @@ function App() {
     dispatch(set_id(user.id));
   }
 
+
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
   }, [ watch ]);
 
   useEffect(() => {
-    if (loggedIn && id === "") {  
+    if (loggedIn && id === "") {
       fetchData(setId, "users/self");
-    } 
+    }
   }, [ loggedIn ])
 
   return (
@@ -40,6 +42,10 @@ function App() {
 
       <Main_Navbar css={{ position: 'absolute'}}/>
 
+
+
+      //<Logout setWatch={setWatch}/>
+      //<main>
       <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
         <Logout setWatch={setWatch}/>
         <Switch>
@@ -58,6 +64,8 @@ function App() {
           <Route path="/courses/:course_id">
             <CoursePage/>
           </Route>
+          <Route path="/calendar">
+            <CalenderPage/>
           <Route path="/inbox">
             <Inbox user={id} />
           </Route>

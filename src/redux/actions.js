@@ -5,6 +5,8 @@ export const STORE_COURSES = 'STORE_COURSES';
 export const REMOVE_COURSES = 'REMOVE_COURSES';
 export const STORE_COLORS = 'STORE_COLORS';
 export const REMOVE_COLORS = 'REMOVE_COLORS';
+export const STORE_EVENTS = 'STORE_EVENTS';
+export const REMOVE_EVENTS = 'REMOVE_EVENTS';
 
 export function set_token(token) {
     return {
@@ -57,5 +59,18 @@ export function store_colors(colors) {
 export function remove_colors() {
     return {
         type: REMOVE_COLORS
+    }
+}
+
+export function store_events(events) {
+    return {
+        type: STORE_EVENTS,
+        events
+    }
+}
+
+export function remove_events(events) {
+    return {
+        type: REMOVE_EVENTS
     }
 }

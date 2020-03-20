@@ -2,7 +2,8 @@ import {
     SET_TOKEN, RESET_TOKEN, 
     SET_ID, 
     STORE_COURSES, REMOVE_COURSES,
-    STORE_COLORS, REMOVE_COLORS 
+    STORE_COLORS, REMOVE_COLORS,
+    STORE_EVENTS, REMOVE_EVENTS
 } from './actions';
 
 function tokenReducer(state = "", action) {
@@ -49,11 +50,24 @@ function colorsReducer(state = {}, action) {
     }
 }
 
+function eventReducer(state = [], action) {
+    switch (action.type) {
+        case STORE_EVENTS:
+            return action.events;
+        case REMOVE_COURSES:
+        case REMOVE_EVENTS:
+            return [];
+        default:
+            return state;
+    }
+}
+
 export default function rootReducer(state = {}, action) {
     return {
         token: tokenReducer(state.token, action),
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
-        colors: colorsReducer(state.colors, action)
+        colors: colorsReducer(state.colors, action),
+        events: eventReducer(state.events, action)
     }
 }
