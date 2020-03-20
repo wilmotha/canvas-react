@@ -34,6 +34,7 @@ class Nav_Main extends React.Component{
 				<NavLink to="/account" className="main-navlink" activeClassName="main-nav-active">Account</NavLink>
 				<NavLink to="/courses" className="main-navlink" activeClassName="main-nav-active">Courses</NavLink>
 				<NavLink to="/calendar" className="main-navlink" activeClassName="main-nav-active">Calendar</NavLink>
+				<NavLink to="/inbox" className="main-navlink" activeClassName="main-nav-active">Inbox</NavLink>
 			</div>
 			
 		)

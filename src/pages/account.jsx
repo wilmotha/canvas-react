@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import {Link, NavLink} from 'react-router-dom';
+
 import {css, jsx, Global} from '@emotion/core'
 
 // this is a modification of fetchData() in canvasApi.js

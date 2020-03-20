@@ -11,6 +11,7 @@ import { set_id, remove_courses } from './redux/actions';
 import Main_Navbar from './components/navbar-main'
 import Logout from './components/logout';
 import Account from './pages/account'
+import Inbox from './pages/inbox'
 import {css, jsx, Global} from '@emotion/core'
 
 function App() {
@@ -56,6 +57,9 @@ function App() {
           </Route>
           <Route path="/courses/:course_id">
             <CoursePage/>
+          </Route>
+          <Route path="/inbox">
+            <Inbox user={id} />
           </Route>
         </Switch>
       </main>
