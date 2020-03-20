@@ -7,10 +7,18 @@ function Nav_Course(props) {
 	return(
 		<div className="course-navbar">
 			<Global styles={css`
+				.title {
+					color: ghostwhite;
+            		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+					margin-left: 15px;
+				}
 				.course-navbar{
-					background-color: #d0d0d0;
+					background-color: #394B58;
 					display: inline-block;
 					width: calc(100vw - 145pt)
+				}
+				.navlink-holder {
+					background-color: #D0D0D0;
 				}
 				.course-navlink{
 					color: #000000;
@@ -35,9 +43,12 @@ function Nav_Course(props) {
 					width: 10em;
 				}
 			`}/>
-			<NavLink to={`/courses/${props.course_id}/assignments`} className="course-navlink" activeClassName="course-nav-active">Assignments</NavLink>
-			<NavLink to={`/courses/${props.course_id}/grades`} className="course-navlink" activeClassName="course-nav-active">Grades</NavLink>
-			<Link to="/courses" className="course-navlink right" >Change Course</Link>
+			<h2 className="title"> {props.name} </h2>
+			<div className="navlink-holder">
+				<NavLink to={`/courses/${props.course_id}/assignments`} className="course-navlink" activeClassName="course-nav-active">Assignments</NavLink>
+				<NavLink to={`/courses/${props.course_id}/grades`} className="course-navlink" activeClassName="course-nav-active">Grades</NavLink>
+				<Link to="/courses" className="course-navlink right" >Change Course</Link>
+			</div>
 		</div>	
 	)
 }

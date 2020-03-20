@@ -115,7 +115,6 @@ function CourseBox(props) {
             justify-content: space-between;
             color: ghostwhite;
             text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-            
         }
 
         h2 {
@@ -182,10 +181,12 @@ export default function Courses() {
     const userId = useSelector(getID);
 
     const styles = css`
+        padding: 25px;
         #course-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: start;
+            margin: -25px;
         }
     `;
 

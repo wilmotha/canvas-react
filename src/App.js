@@ -60,7 +60,7 @@ function App() {
   return (
     <div css={styles}>
       <Main_Navbar setWatch={setWatch} css={{ position: 'absolute'}}/>
-      <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
+      <main css={{ 'margin-left': '125pt', display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
         <Switch>
           <Route path="/login/:prev_url">
             <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
