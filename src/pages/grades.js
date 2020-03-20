@@ -26,7 +26,7 @@ const flexStyle = css`
         }
 
         .col {
-            display: flex;
+            ${'' /* display: flex; */}
             flex: 1;
             box-sizing: border-box;
             flex-grow: 1;
@@ -72,6 +72,40 @@ function Status(props) {
     );
 }
 
+
+function formatDate(date) {
+    let timeZoneOffset = new Date().getTimezoneOffset()/60;
+    let d = new Date(date);
+    console.log(d);
+    let a_p = "";
+    let hour = d.getHours();
+    let minutes = d.getMinutes().toString();
+
+    if (hour < 12) {
+        a_p = "AM";
+    } else {
+        a_p = "PM";
+    }
+ 
+    if (hour == 0) {
+        hour = 12;
+    }
+ 
+    if (hour > 12) {
+        hour = hour - 12;
+    }
+ 
+    if (minutes.length == 1) {
+        minutes = "0" + minutes;
+    }
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
+
+    let formatedDate = `${months[d.getUTCMonth()]} ${d.getDate()} by ${hour}:${minutes} ${a_p}`;  
+
+    return formatedDate;
+}
+
 function GradeBox(props) {
     const assignment = props.assignment;
     const course_id = useParams().course_id;
@@ -80,13 +114,13 @@ function GradeBox(props) {
         <div css={flexStyle}>
             <div className="row">
                 <div className="col"> <Link to={`/courses/${course_id}/assignments/${assignment.id}`}> {assignment.name} </Link> </div>
-                <div className="col"> {assignment.due_at} </div>
+                <div className="col"> {formatDate(assignment.due_at)} </div>
                 {assignment.submission && assignment.submission.workflow_state == "graded" ? <>
                     <Status submission={assignment.submission}/> 
                     <div className="col"> {assignment.submission.grade} </div>  
                 </> : <>
                     <div className="col">  </div>
-                    <div className="col"> / </div>
+                    <div className="col"> _ </div>
                 </>}
                 <div className="col"> {assignment.points_possible} </div>
             </div>
@@ -100,20 +134,46 @@ export default function Grades(props) {
     const dispatch = useDispatch();
     const [ assignments, setAssignments ] = useState([]);
     const [ course, setCourse ] = useState({});
+    const [ groups, setGroups ] = useState({});
     const [ enrollment, setEnrollment ] = useState({});
+    
     const styles = css`
         margin: 25px;
+
+        @media only screen and (min-width: 800px) {
+            #grades-container {
+                display: flex;
+                flex-direction: horizontal;
+                align-content: stretch;
+            }
+        }
+        @media only screen and (max-width: 800px) {
+            #grades-container {
+                display: inline;
+            }
+        }
+       
+
+        #assignment-container {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+        }
+
         #final-grade {
             display: flex;
             flex-direction: horizontal;
-            justify-content: space-between;
-            width: 300px;
+            justify-content: space-around;
+            width: 200px;
         }
     `;
 
     useEffect(() => {
-        fetchData(setAssignments,  `courses/${course_id}/assignments?include[]=submission`);
-    }, []);
+        if (assignments === undefined || assignments.length === 0) {
+            fetchData(setAssignments,  `courses/${course_id}/assignments?include[]=submission`);
+            fetchData(setGroups, `courses/${course_id}/assignment_groups`);
+        }
+    }, [ assignments ]);
 
 
     const setCourses = courses => {
@@ -136,23 +196,30 @@ export default function Grades(props) {
 
 
     return (
-        <div css={styles, flexStyle}>
+        <div css={[styles, flexStyle]}>
             <h1>Grades</h1>
-            {console.log("Assignments: ", assignments)}
-            <div className="row header">
-                <div className="col header"> Name </div>
-                <div className="col header"> Due </div>
-                <div className="col header"> Status </div>
-                <div className="col header"> Score </div>
-                <div className="col header"> Out of </div>
-            </div>
-            {assignments.map(assignment => (
-                <GradeBox key={assignment.id} assignment={assignment} />         
-            ))}
-            <div id="final-grade">
-                <h3> Final Grade </h3>
-                <h3> {enrollment.computed_current_grade} </h3>
-                <h3> {enrollment.computed_current_score}% </h3>
+            <div id="grades-container">
+                <div id="assignment-container">
+                    <div className="row header">
+                        <div className="col header"> Name </div>
+                        <div className="col header"> Due </div>
+                        <div className="col header"> Status </div>
+                        <div className="col header"> Score </div>
+                        <div className="col header"> Out of </div>
+                    </div>
+                    {assignments.map(assignment => (
+                        <GradeBox key={assignment.id} assignment={assignment} />         
+                    ))}
+                </div>
+                <div id="final-grade-container">
+                    <h3> Final Grade </h3>
+                    <div id="final-grade">
+                        <h3> {enrollment.computed_current_grade} </h3>
+                        <h3> {enrollment.computed_current_score}% </h3>
+                    </div>
+                    {console.log("Groups: ", groups)}
+                    <div>  </div>
+                </div>
             </div>
         </div>
     )
