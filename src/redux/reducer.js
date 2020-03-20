@@ -2,6 +2,7 @@ import {
     SET_TOKEN, RESET_TOKEN, 
     SET_ID, 
     STORE_COURSES, REMOVE_COURSES,
+    ADD_COURSE_ASSIGNMENTS,
     STORE_COLORS, REMOVE_COLORS,
     STORE_EVENTS, REMOVE_EVENTS
 } from './actions';
@@ -44,8 +45,24 @@ function colorsReducer(state = {}, action) {
             return action.colors;
         case REMOVE_COLORS:
         case REMOVE_COURSES:
-            return {}
+            return {};
         default:   
+            return state;
+    }
+}
+
+function assignmentsReducer(state = [], action) {
+    console.log("CLEAR: ", action.type);
+    console.log("NOOO: ", state);
+    switch (action.type) {
+        case ADD_COURSE_ASSIGNMENTS:
+            return [
+                ...state,
+                action.assignments
+            ];
+        case REMOVE_COURSES:
+            return [];
+        default:
             return state;
     }
 }
@@ -68,6 +85,7 @@ export default function rootReducer(state = {}, action) {
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
         colors: colorsReducer(state.colors, action),
+        allAssignments: assignmentsReducer(state.allAssignments, action),
         events: eventReducer(state.events, action)
     }
 }

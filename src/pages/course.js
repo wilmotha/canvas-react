@@ -1,10 +1,8 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { Links, useHistory, useParams, Route, Switch } from 'react-router-dom';
-import { fetchData, putData } from '../canvasApi';
+import { useHistory, useParams, Route, Switch, useLocation } from 'react-router-dom';
+import { fetchData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
-import { getID, getCourses } from '../redux/selector';
+import { getCourses } from '../redux/selector';
 import { store_courses } from '../redux/actions';
 import Grades from './grades';
 import Course_Navbar from '../components/navbar-course'
@@ -15,8 +13,8 @@ export default function CoursePage(props) {
     const dispatch = useDispatch();
     const course_id = useParams().course_id;
     const [ course, setCourse ] = useState({});
-    const [ coursePages, setCoursePages ] = useState({});
-    console.log(course_id);
+    const history = useHistory();
+    let location = useLocation();
 
     const setCourses = courses => {
         dispatch(store_courses(courses));
@@ -34,21 +32,26 @@ export default function CoursePage(props) {
         if (checkCourse.length > 0) {
             setCourse(checkCourse[0]);
         } 
-        fetchData(setCoursePages, `courses/${course_id}/pages?sort=title&order=asc`);
     }, [ course_id ])
 
     return (
         <div>
             <h1>{course.name}</h1>
-            {console.log("Course: ", course)}
-            {console.log("Pages: ", coursePages)}
-
-            <Course_Navbar />
-
+            <Course_Navbar course_id={course_id} />
             <Route>
                 <Switch>
-                    <Route to="courses/:course_id/grades">
-                        <Grades />
+                    <Route path="/courses/:course_id/grades">
+                        <Grades course={course}/>
+                    </Route>
+                   
+                    <Route path="/courses/:course_id/assignments/:assignment_id">
+                        <h1>Yeet</h1>
+                    </Route>
+                    <Route path="/courses/:course_id/assignments">
+                        <h1>Assignments?</h1>
+                    </Route>
+                    <Route path="/courses/:course_id">
+                        
                     </Route>
                 </Switch>
             </Route>

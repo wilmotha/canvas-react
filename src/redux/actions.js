@@ -5,6 +5,7 @@ export const STORE_COURSES = 'STORE_COURSES';
 export const REMOVE_COURSES = 'REMOVE_COURSES';
 export const STORE_COLORS = 'STORE_COLORS';
 export const REMOVE_COLORS = 'REMOVE_COLORS';
+export const ADD_COURSE_ASSIGNMENTS = 'ADD_COURSE_ASSIGNMENTS';
 export const STORE_EVENTS = 'STORE_EVENTS';
 export const REMOVE_EVENTS = 'REMOVE_EVENTS';
 
@@ -45,7 +46,7 @@ export function store_courses(courses) {
 
 export function remove_courses() {
     return {
-        type: STORE_COURSES
+        type: REMOVE_COURSES
     }
 }
 
@@ -62,6 +63,12 @@ export function remove_colors() {
     }
 }
 
+export function add_course_assignments(assignments) {
+    return {
+        type: ADD_COURSE_ASSIGNMENTS,
+        assignments
+    }
+}
 export function store_events(events) {
     return {
         type: STORE_EVENTS,
