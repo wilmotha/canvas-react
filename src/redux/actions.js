@@ -6,7 +6,7 @@ export const REMOVE_COURSES = 'REMOVE_COURSES';
 export const STORE_COLORS = 'STORE_COLORS';
 export const REMOVE_COLORS = 'REMOVE_COLORS';
 export const STORE_EVENTS = 'STORE_EVENTS';
-export const REMOVE_EVENT = 'REMOVE_EVENT';
+export const REMOVE_EVENTS = 'REMOVE_EVENTS';
 
 export function set_token(token) {
     return {

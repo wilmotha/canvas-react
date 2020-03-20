@@ -57,10 +57,10 @@ export async function fetchData(setData, toFetch = "") {
             }
         );
         responseBody = await response.json();
+        setData(JSON.parse(responseBody.results));
     } catch(e) {
         console.log("oops... ", e);
     }
-    setData(JSON.parse(responseBody.results));
     // console.log(JSON.parse(responseBody.results));
 }
 

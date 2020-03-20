@@ -57,6 +57,9 @@ function App() {
           <Route path="/courses/:course_id">
             <CoursePage/>
           </Route>
+          <Route path="/calendar">
+            <CalenderPage/>
+          </Route>
         </Switch>
       </main>
     </div>

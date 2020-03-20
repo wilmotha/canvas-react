@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
-import { Links, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchData, putData } from '../canvasApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID, getCourses, getColors } from '../redux/selector';
