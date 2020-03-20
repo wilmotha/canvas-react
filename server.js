@@ -6,6 +6,9 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 const TOKEN = 'token';
+// const MyToken = '1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK';
+var MyToken = "1002~SQqNiOhRQ3qtCXAkmWRD7qxB5tLMbkiSDgQav0quhpxPbdYa0YbWZM0DtPNwmKuK";
+
 
 app.use(cookieParser());
 app.use(express.json());
@@ -81,7 +84,9 @@ app.get('/get/*', (req, res) => {
     request({
         url: `https://canvas.instructure.com/api/v1/${req.params[0]}${query}`,
         headers: {
-            'Authorization': `Bearer ${req.cookies[TOKEN]}`,
+            // 'Authorization': `Bearer ${req.cookies[MyToken]}`,
+            'Authorization': `Bearer ${MyToken}`,
+
         }
         },
         (error, response, body) => {

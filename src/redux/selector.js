@@ -13,3 +13,7 @@ export function getCourses(state) {
 export function getColors(state) {
     return state.colors
 }
+
+export function getEvents(state) {
+    return state.events;
+}
