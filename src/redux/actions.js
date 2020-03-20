@@ -5,12 +5,9 @@ export const STORE_COURSES = 'STORE_COURSES';
 export const REMOVE_COURSES = 'REMOVE_COURSES';
 export const STORE_COLORS = 'STORE_COLORS';
 export const REMOVE_COLORS = 'REMOVE_COLORS';
-<<<<<<< HEAD
 export const ADD_COURSE_ASSIGNMENTS = 'ADD_COURSE_ASSIGNMENTS';
-=======
 export const STORE_EVENTS = 'STORE_EVENTS';
 export const REMOVE_EVENTS = 'REMOVE_EVENTS';
->>>>>>> 65595d3aa030a02b8c89d613f3987812ec3fd44b
 
 export function set_token(token) {
     return {
@@ -66,14 +63,12 @@ export function remove_colors() {
     }
 }
 
-<<<<<<< HEAD
 export function add_course_assignments(assignments) {
     return {
         type: ADD_COURSE_ASSIGNMENTS,
         assignments
     }
 }
-=======
 export function store_events(events) {
     return {
         type: STORE_EVENTS,
@@ -86,4 +81,3 @@ export function remove_events(events) {
         type: REMOVE_EVENTS
     }
 }
->>>>>>> 65595d3aa030a02b8c89d613f3987812ec3fd44b

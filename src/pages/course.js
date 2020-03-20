@@ -37,9 +37,7 @@ export default function CoursePage(props) {
     return (
         <div>
             <h1>{course.name}</h1>
-
-            <Course_Navbar />
-
+            <Course_Navbar course_id={course_id} />
             <Route>
                 <Switch>
                     <Route path="/courses/:course_id/grades">
@@ -53,7 +51,7 @@ export default function CoursePage(props) {
                         <h1>Assignments?</h1>
                     </Route>
                     <Route path="/courses/:course_id">
-                        <button onClick={() => history.push(`${location.pathname}/grades`)}>Grades</button>
+                        
                     </Route>
                 </Switch>
             </Route>

@@ -2,8 +2,9 @@
 import React from 'react'
 import {Link, NavLink} from 'react-router-dom';
 import {css, jsx, Global} from '@emotion/core'
+import Logout from './logout';
 
-class Nav_Main extends React.Component{
+class Nav_Main extends React.Component {
 	render(){
 		return(
 			<div className="main-navbar">
@@ -31,6 +32,7 @@ class Nav_Main extends React.Component{
 						color: #ffffff;
 					}
 				`}/>
+   			    <Logout setWatch={this.props.setWatch}/>
 				<NavLink to="/account" className="main-navlink" activeClassName="main-nav-active">Account</NavLink>
 				<NavLink to="/courses" className="main-navlink" activeClassName="main-nav-active">Courses</NavLink>
 				<NavLink to="/calendar" className="main-navlink" activeClassName="main-nav-active">Calendar</NavLink>

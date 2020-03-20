@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { jsx, css } from '@emotion/core'
 import { login } from '../canvasApi';
@@ -33,7 +33,7 @@ export default function Login(props) {
 
     const handleLogin = e => {
         if(e) e.preventDefault();
-        const token = e.target.children[1].value;
+        const token = e.target.children[2].value;
         login(token, loginRedirect);
     }
 

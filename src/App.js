@@ -4,7 +4,7 @@ import Login from './components/login';
 import { useSelector, useDispatch } from 'react-redux';
 import { getID } from './redux/selector';
 import { fetchData, checkLoggedIn } from './canvasApi';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import Courses from './pages/Courses';
 import CoursePage from './pages/course';
 import CalenderPage from './pages/calender';
@@ -20,7 +20,13 @@ function App() {
   const [ watch, setWatch ] = useState(loggedIn);
   const dispatch = useDispatch();
   const id = useSelector(getID);
+  const history = useHistory();
+  let location = useLocation();
 
+
+  const styles = css`
+    display: flex;
+  `;
 
   // useEffect(() => {
   //   // reset redux
@@ -34,6 +40,12 @@ function App() {
     dispatch(set_id(user.id));
   }
 
+  const handleLoginState = state => {
+    if (state === false) {
+      history.push(`/login/${location.pathname}`);
+    }
+    setLoggedIn(state);
+  }
 
   useEffect(() => {
     checkLoggedIn(setLoggedIn);
@@ -46,14 +58,9 @@ function App() {
   }, [ loggedIn ])
 
   return (
-    <div>
-
-      <Main_Navbar css={{ position: 'absolute'}}/>
-
-      <Logout setWatch={setWatch}/>
-      <main>
+    <div css={styles}>
+      <Main_Navbar setWatch={setWatch} css={{ position: 'absolute'}}/>
       <main css={{ display: 'inline-block', verticalAlign: 'top', maxWidth: 'calc(100vw - 145pt)'}}>
-        <Logout setWatch={setWatch}/>
         <Switch>
           <Route path="/login/:prev_url">
             <Login loggedIn={loggedIn} setWatch={setWatch} watch={watch} />
@@ -77,7 +84,6 @@ function App() {
             <Inbox user={id} />
           </Route>
         </Switch>
-      </main>
       </main>
     </div>
   );
