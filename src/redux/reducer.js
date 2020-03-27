@@ -25,7 +25,7 @@ function coursesReducer(state = { isFetching: false, items: [] }, action) {
         case RECEIVE_COURSES:
             return {
                 isFetching: false,
-                items: actions.courses
+                items: action.courses
             }
         default:
             return state;
@@ -58,7 +58,7 @@ export default function rootReducer(state = {}, action) {
         id: idReducer(state.id, action),
         courses: coursesReducer(state.courses, action),
         allAssignments: assignmentsReducer(state.allAssignments, action),
-        events: eventReducer(state.events, action),
+        events: eventsReducer(state.events, action),
         inbox: inboxReducer(state.inbox, action)
     }
 }

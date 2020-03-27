@@ -59,7 +59,7 @@ export function receive_assignments(assignments) {
 //                 EVENTS                      //
 /////////////////////////////////////////////////
 export const REQUEST_EVENTS = 'REQUEST_EVENTS';
-export function request_inbox() {
+export function request_events() {
     return {
         type: REQUEST_EVENTS
     }
