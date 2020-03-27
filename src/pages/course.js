@@ -23,12 +23,13 @@ export default function CoursePage(props) {
     }
 
     useEffect(() => {
-        if (courses === undefined || courses.length === 0) {
-            fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
-        } else {
-            const tempCourses = courses;
-            setCourses(tempCourses);
-        }
+        dispatch(store_courses([]));
+        // if (courses === undefined || courses.length === 0) {
+        //     fetchData(setCourses, "courses?enrollment_state=active&include[]=term&include[]=total_students");
+        // } else {
+        //     const tempCourses = courses;
+        //     setCourses(tempCourses);
+        // }
         const checkCourse = courses.filter(course => course.id == course_id);
         if (checkCourse.length > 0) {
             setCourse(checkCourse[0]);

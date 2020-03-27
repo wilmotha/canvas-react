@@ -1,83 +1,81 @@
-export const SET_TOKEN = 'SET_TOKEN';
-export const RESET_TOKEN = 'RESET_TOKEN';
-export const SET_ID = 'SET_ID';
-export const STORE_COURSES = 'STORE_COURSES';
-export const REMOVE_COURSES = 'REMOVE_COURSES';
-export const STORE_COLORS = 'STORE_COLORS';
-export const REMOVE_COLORS = 'REMOVE_COLORS';
-export const ADD_COURSE_ASSIGNMENTS = 'ADD_COURSE_ASSIGNMENTS';
-export const STORE_EVENTS = 'STORE_EVENTS';
-export const REMOVE_EVENTS = 'REMOVE_EVENTS';
-
-export function set_token(token) {
+/////////////////////////////////////////////////
+//                 COURSES                     //
+/////////////////////////////////////////////////
+export const REQUEST_COURSES = 'REQUEST_COURSES';
+export function request_courses() {
     return {
-        type: SET_TOKEN,
-        token
+        type: REQUEST_COURSES
     }
 }
 
-export function reset_token() {
+export const RECEIVE_COURSES = 'REQUEST_COURSES';
+export function receive_courses(courses) {
     return {
-        type: RESET_TOKEN,
-        token: 0
-    }
-}
-
-export function set_id(id) {
-    return {
-        type: SET_ID,
-        id
-    }
-}
-
-export function remove_id() {
-    return {
-        type: SET_ID,
-        id: ""
-    }
-}
-
-export function store_courses(courses) {
-    return {
-        type: STORE_COURSES,
+        type: REQUEST_COURSES,
         courses
     }
 }
 
-export function remove_courses() {
+/////////////////////////////////////////////////
+//               ASSIGNMENTS                   //
+/////////////////////////////////////////////////
+export const REQUEST_ASSIGNMENTS = 'REQUEST_ASSIGNMENTS';
+export function request_assignments() {
     return {
-        type: REMOVE_COURSES
+        type: REQUEST_ASSIGNMENTS
     }
 }
 
-export function store_colors(colors) {
+export const RECEIVE_ASSIGNMENTS = 'REQUEST_ASSIGNMENTS';
+export function receive_assignments(assignments) {
     return {
-        type: STORE_COLORS,
-        colors
-    }
-}
-
-export function remove_colors() {
-    return {
-        type: REMOVE_COLORS
-    }
-}
-
-export function add_course_assignments(assignments) {
-    return {
-        type: ADD_COURSE_ASSIGNMENTS,
+        type: REQUEST_ASSIGNMENTS,
         assignments
     }
 }
-export function store_events(events) {
+
+/////////////////////////////////////////////////
+//                 EVENTS                      //
+/////////////////////////////////////////////////
+export const REQUEST_EVENTS = 'REQUEST_EVENTS';
+export function request_inbox() {
     return {
-        type: STORE_EVENTS,
+        type: REQUEST_EVENTS
+    }
+}
+
+export const RECEIVE_EVENTS = 'REQUEST_EVENTS';
+export function receive_events(events) {
+    return {
+        type: REQUEST_EVENTS,
         events
     }
 }
 
-export function remove_events(events) {
+/////////////////////////////////////////////////
+//                   INBOX                     //
+/////////////////////////////////////////////////
+export const REQUEST_INBOX = 'REQUEST_INBOX';
+export function request_inbox() {
     return {
-        type: REMOVE_EVENTS
+        type: REQUEST_INBOX
+    }
+}
+
+export const RECEIVE_INBOX = 'REQUEST_INBOX';
+export function receive_inbox(inbox) {
+    return {
+        type: REQUEST_INBOX,
+        inbox
+    }
+}
+
+/////////////////////////////////////////////////
+//               ASSIGNMENTS                   //
+/////////////////////////////////////////////////
+export const CLEAR = 'CLEAR';
+export function clear() {
+    return {
+        type: CLEAR
     }
 }

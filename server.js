@@ -46,7 +46,7 @@ app.get('/logout', (req, res) => {
     res.clearCookie(TOKEN, { httpOnly: true, sameSite: "none"});  
     console.log("cookies after: ", req.cookies);
     res.send(false);
-});
+}); 
 
 // handle any querys that are part of the api call
 function stringifyQuery(queryArray) {
@@ -95,7 +95,7 @@ app.get('/get/*', (req, res) => {
                 console.log("Success: ", response.statusCode);
             } else {
                 res.status(response.statusCode);
-                console.log("Error: ", response.status);
+                console.log("Error: ", response.body);
             }
         }
     );
