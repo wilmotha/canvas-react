@@ -1,3 +1,8 @@
+import fetchData from '../canvasApi';
+import fetch from 'isomorphic-unfetch';
+import { response } from 'express';
+
+
 /////////////////////////////////////////////////
 //                 COURSES                     //
 /////////////////////////////////////////////////
@@ -13,6 +18,22 @@ export function receive_courses(courses) {
     return {
         type: REQUEST_COURSES,
         courses
+    }
+}
+
+export function fetchCourse() {
+    return function(dispatch) {
+        dispatch(request_courses());
+
+        return fetch(
+            "/get/courses?enrollment_state=active&include[]=term&include[]=total_students&include[]=total_scores")
+            .then(
+                response => response.json(),
+                error => console.log('Error: ', error)
+            )
+            .then(courses =>
+                dispatch(receive_courses(courses))
+            );
     }
 }
 

@@ -9,6 +9,50 @@ import {
     RECEIVE_INBOX
 } from './actions';
 
+function idReducer(state = "", action) {
+    switch(action.type) {
+        default:
+            return state;
+    }
+}
+
+function coursesReducer(state = { isFetching: false, items: [] }, action) {
+    switch(action.type) {
+        case REQUEST_COURSES:
+            return {
+                isFetching: true,
+            }
+        case RECEIVE_COURSES:
+            return {
+                isFetching: false,
+                items: actions.courses
+            }
+        default:
+            return state;
+    }
+}
+
+function assignmentsReducer(state = [], action) {
+    switch(action.type) {
+        default:
+            return state;
+    }
+}
+
+function eventsReducer(state = [], action) {
+    switch(action.type) {
+        default:
+            return state;
+    }
+}
+
+function inboxReducer(state = [], action) {
+    switch(action.type) {
+        default:
+            return state;
+    }
+}
+
 export default function rootReducer(state = {}, action) {
     return {
         id: idReducer(state.id, action),
