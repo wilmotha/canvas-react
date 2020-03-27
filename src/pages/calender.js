@@ -32,9 +32,16 @@ export default function CalenderPage(props) {
 
   return (
     <div>
-
     <h1>Calendar Events</h1>
-    <h2>{events[0].title}</h2>
+    {events.map(event => (
+      <>
+      <h2>{event.title}</h2>
+      <h4>Start at: {event.start_at}</h4>
+      <h4>End at: {events.end_at}</h4>
+      <h4>Location Name: {event.location_name}</h4>  
+      </>
+    ))}
+    {/* <h2>{events[0].title}</h2>
     <h4>Start at: {events[0].start_at}</h4>
     <h4>End at: {events[0].end_at}</h4>
     <h4>Location Name: {events[0].location_name}</h4>
@@ -57,7 +64,7 @@ export default function CalenderPage(props) {
     <h2>{events[5].title}</h2>
     <h4>Start at: {events[5].start_at}</h4>
     <h4>End at: {events[5].end_at}</h4>
-    <h4>Location Name: {events[5].location_name}</h4>
+    <h4>Location Name: {events[5].location_name}</h4> */}
 
       {console.log("Events: ", events)}
 

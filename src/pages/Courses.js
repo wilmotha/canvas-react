@@ -181,7 +181,7 @@ export default function Courses() {
     const userId = useSelector(getID);
 
     const styles = css`
-        padding: 25px;
+        ${'' /* padding: 25px; */}
         #course-container {
             display: flex;
             flex-wrap: wrap;
